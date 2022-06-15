@@ -107,9 +107,6 @@ def Wrapped():
         sp.user_playlist_add_tracks(USERNAME, playlist_id, track_ids)
     playlistExists = False
 
-
-
-    
 # Run script to insert into sheet
 keep_alive()
 
