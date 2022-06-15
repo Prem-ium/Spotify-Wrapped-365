@@ -1,0 +1,72 @@
+Metadata-Version: 2.1
+Name: gspread
+Version: 5.4.0
+Summary: Google Spreadsheets Python API
+Home-page: https://github.com/burnash/gspread
+Author: Anton Burnashev
+Author-email: fuss.here@gmail.com
+Maintainer: Alexandre Lavigne
+Maintainer-email: lavigne958@gmail.com
+License: MIT
+Keywords: spreadsheets,google-spreadsheets
+Platform: UNKNOWN
+Classifier: Programming Language :: Python
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.7
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Operating System :: OS Independent
+Classifier: Development Status :: 5 - Production/Stable
+Classifier: Intended Audience :: Developers
+Classifier: Intended Audience :: End Users/Desktop
+Classifier: Intended Audience :: Science/Research
+Classifier: Topic :: Office/Business :: Financial :: Spreadsheet
+Classifier: Topic :: Software Development :: Libraries :: Python Modules
+Requires-Python: >=3.6, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*
+License-File: LICENSE.txt
+Requires-Dist: google-auth (>=1.12.0)
+Requires-Dist: google-auth-oauthlib (>=0.4.1)
+
+Super simple `Google Spreadsheets Python API`_.
+
+.. _Google Spreadsheets Python API: https://github.com/burnash/gspread
+
+Features
+--------
+
+* Google Sheets API v4.
+* Open a spreadsheet by title, key or url.
+* Read, write, and format cell ranges.
+* Sharing and access control.
+* Batching updates.
+
+
+Example
+-------
+
+.. code:: python
+
+   import gspread
+
+   gc = gspread.service_account()
+
+   # Open a spreadsheet by title
+   sh = gc.open("Iris Data")
+
+   # Get the first sheet
+   wk = sh.sheet1
+
+   # Update a range of cells using the top left corner address
+   wk.update('A1', [['Species', 'Sepal length'], ['Iris setosa', 5.1]])
+
+   # Format the header
+   wk.format('A1:B1', {'textFormat': {'bold': True}})
+
+
+
+License
+-------
+MIT
+
+
