@@ -8,6 +8,9 @@ import time
 import gspread
 import json
 
+# How many seconds should the program wait until executing again
+waitSecs = float(os.environ['MINUTES'])
+waitSecs = waitSecs * 60.0
 # Returns top artists within a time period
 def get_top_artists(time_period):
     top_artists = sp.current_user_top_artists(limit = 50, time_range=time_period)
@@ -74,9 +77,6 @@ SPOTIPY_SECRET_CLIENT = os.environ['SECRET_CLIENT_ID']
 SPOTIPY_REDIRECT = os.environ['REDIRECT_URL']
 SCOPE = "user-top-read playlist-modify-private playlist-modify-public user-library-modify user-library-read playlist-read-private"
 USERNAME = os.environ['USERNAME']
-
-# How many seconds should the program wait until executing again
-waitSecs = os.environ['MINUTES'] / 60
 
 # Initalize Spotipy
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT, redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
