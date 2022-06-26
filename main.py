@@ -1,12 +1,12 @@
 import os
-from keep_alive import keep_alive
 import spotipy
-from spotipy.oauth2 import SpotifyOAuth
-from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 import time
 import gspread
 import json
+from spotipy.oauth2 import SpotifyOAuth
+from oauth2client.service_account import ServiceAccountCredentials
+from keep_alive import keep_alive
 
 # How many seconds should the program wait until executing again
 wait = float(os.environ['MINUTES'])
@@ -122,6 +122,9 @@ def main():
   #Infinite loop 
   while True:
     Wrapped()
+    print()
+    print(f'All finished, sleeping for {wait / 60} minutes...')
+    print()
     time.sleep(wait)
     
 if __name__ == '__main__':
