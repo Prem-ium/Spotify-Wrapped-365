@@ -1,16 +1,16 @@
 import os
-from keep_alive import keep_alive
 import spotipy
-from spotipy.oauth2 import SpotifyOAuth
-from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 import time
 import gspread
 import json
+from spotipy.oauth2 import SpotifyOAuth
+from oauth2client.service_account import ServiceAccountCredentials
+from keep_alive import keep_alive
 
 # Returns top artists within a time period
 def get_top_artists(time_period):
-    top_artists = sp.current_user_top_artists(time_range=time_period)
+    top_artists = sp.current_user_top_artists(limit = 50, time_range=time_period)
     artist_info = []
     for artist in top_artists['items']:
         artist_info.append([artist['name'], artist['external_urls']
@@ -69,11 +69,11 @@ gc = gspread.authorize(creds)
 sh = gc.open('Wrapped365')
 
 # Update with your own Spotify Credentials (Client ID, Secret Client ID, redirect, and username)
-SPOTIPY_CLIENT = os.environ['client_sec']
-SPOTIPY_SECRET_CLIENT = os.environ['sec_id']
-SPOTIPY_REDIRECT = os.environ['redirec']
+SPOTIPY_CLIENT = os.environ['CLIENT_SEC']
+SPOTIPY_SECRET_CLIENT = os.environ['SECRET_ID']
+SPOTIPY_REDIRECT = os.environ['REDIRECT_URL']
 SCOPE = "user-top-read playlist-modify-private playlist-modify-public user-library-modify user-library-read playlist-read-private"
-USERNAME = 'frostscope'
+USERNAME = os.environ['USERNAME']
 
 # How many seconds should the program wait until executing again
 waitSecs = 21600
