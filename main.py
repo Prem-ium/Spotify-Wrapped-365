@@ -9,8 +9,8 @@ import gspread
 import json
 
 # How many seconds should the program wait until executing again
-waitSecs = float(os.environ['MINUTES'])
-waitSecs = waitSecs * 60.0
+wait = float(os.environ['MINUTES'])
+wait = wait * 60.0
 # Returns top artists within a time period
 def get_top_artists(time_period):
     top_artists = sp.current_user_top_artists(limit = 50, time_range=time_period)
@@ -110,7 +110,7 @@ def Wrapped():
           
     # Create playlist
     if playlistExists == False:
-        playlist_id = sp.user_playlist_create(USERNAME, f'{time_period} - Top Tracks Wrapped', public=True, collaborative=False, description=f'Top Played Tracks for {time_period}. Generated using SaznCode\'s Wrapped365 Python Project. Updated every {waitSecs} seconds.')['id']
+        playlist_id = sp.user_playlist_create(USERNAME, f'{time_period} - Top Tracks Wrapped', public=True, collaborative=False, description=f'Top Played Tracks for {time_period}. Generated using SaznCode\'s Wrapped365 Python Project. Updated every {wait} seconds.')['id']
         sp.user_playlist_add_tracks(USERNAME, playlist_id, track_ids)
     playlistExists = False
 
@@ -122,7 +122,7 @@ def main():
   #Infinite loop 
   while True:
     Wrapped()
-    time.sleep(waitSecs)
+    time.sleep(wait)
     
 if __name__ == '__main__':
     main()
