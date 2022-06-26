@@ -1,12 +1,12 @@
 import os
+from keep_alive import keep_alive
 import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 import time
 import gspread
 import json
-from spotipy.oauth2 import SpotifyOAuth
-from oauth2client.service_account import ServiceAccountCredentials
-from keep_alive import keep_alive
 
 # Returns top artists within a time period
 def get_top_artists(time_period):
@@ -69,14 +69,14 @@ gc = gspread.authorize(creds)
 sh = gc.open('Wrapped365')
 
 # Update with your own Spotify Credentials (Client ID, Secret Client ID, redirect, and username)
-SPOTIPY_CLIENT = os.environ['CLIENT_SEC']
-SPOTIPY_SECRET_CLIENT = os.environ['SECRET_ID']
+SPOTIPY_CLIENT = os.environ['CLIENT_ID']
+SPOTIPY_SECRET_CLIENT = os.environ['SECRET_CLIENT_ID']
 SPOTIPY_REDIRECT = os.environ['REDIRECT_URL']
 SCOPE = "user-top-read playlist-modify-private playlist-modify-public user-library-modify user-library-read playlist-read-private"
 USERNAME = os.environ['USERNAME']
 
 # How many seconds should the program wait until executing again
-waitSecs = 21600
+waitSecs = os.environ['MINUTES'] / 60
 
 # Initalize Spotipy
 sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT, redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
