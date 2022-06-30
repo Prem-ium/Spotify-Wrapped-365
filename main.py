@@ -1,12 +1,14 @@
 import os
+from keep_alive import keep_alive
 import spotipy
+from spotipy.oauth2 import SpotifyOAuth
+from oauth2client.service_account import ServiceAccountCredentials
 import pandas as pd
 import time
 import gspread
 import json
-from spotipy.oauth2 import SpotifyOAuth
-from oauth2client.service_account import ServiceAccountCredentials
-from keep_alive import keep_alive
+# Keep the Replit program going. Do not forget to use UpTimeRobot
+keep_alive()
 
 # How many seconds should the program wait until executing again
 wait = float(os.environ['MINUTES'])
@@ -113,10 +115,6 @@ def Wrapped():
         playlist_id = sp.user_playlist_create(USERNAME, f'{time_period} - Top Tracks Wrapped', public=True, collaborative=False, description=f'Top Played Tracks for {time_period}. Generated using SaznCode\'s Wrapped365 Python Project. Updated every {wait} seconds.')['id']
         sp.user_playlist_add_tracks(USERNAME, playlist_id, track_ids)
     playlistExists = False
-
-
-# Keep the program going. Do not forget to use UpTimeRobot
-keep_alive()
 
 def main():
   #Infinite loop 
