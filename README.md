@@ -20,7 +20,7 @@ If your only interest is obtaining Top Tracks on your account, you may skip this
 5. Open Google Sheets and create a new file named 'Wrapped365'. Add tabs named 'short_term', 'medium_term', 'long_term', 'short_term Artists', 'medium_term Artists', and 'long_term Artists'
 6. Share the Google Sheet Document with the email of your service account, make sure to give them editor permissions. The email can be found back on Google's Cloud Console Credentials or within the JSON file you downloaded. It would look something like: wrapped-test@wrapped-test943892.iam.gserviceaccount.com
 
-#### DESCRIPTION FOR ENV VARIABLES
+## DESCRIPTION FOR ENV VARIABLES
 These are the necessary enviormental variables for the Wrapped to function properly. They must be added.
 - CLIENT_ID: [Found on Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)
 - SECRET_CLIENT_ID: [Found on Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)
