@@ -134,12 +134,17 @@ def Wrapped():
 
 
 def main():
-    # Infinite loop
-    while True:
-        Wrapped()
-        print(f'\nAll finished, sleeping for {(wait / 60)/60} hours...\n')
-        time.sleep(wait)
-
+    try:
+        # Infinite loop
+        while True:
+            Wrapped()
+            print(f'\nAll finished, sleeping for {(wait / 60)/60} hours...\n')
+            time.sleep(wait)
+    except Exception as e:
+        print(e)
+        print('\nSomething went wrong, sleeping for 1 hour... before retrying\n')
+        time.sleep(3600)
+        main()
 
 if __name__ == '__main__':
     main()
