@@ -14,9 +14,6 @@ from keep_alive import keep_alive
 # Keep the Replit program going. Do not forget to use UpTimeRobot
 keep_alive()
 
-# How many seconds should the program wait until executing again
-wait = float(os.environ['MINUTES']) * 60.0
-
 # Update with your own Spotify Credentials (Client ID, Secret Client ID, redirect, and username)
 SPOTIPY_CLIENT = os.environ['CLIENT_ID']
 SPOTIPY_SECRET_CLIENT = os.environ['SECRET_CLIENT_ID']
@@ -36,12 +33,14 @@ GSscope = ["https://spreadsheets.google.com/feeds",
 my_secret = json.loads(os.environ['GSPREAD_KEYS'])
 creds = ServiceAccountCredentials.from_json_keyfile_dict(my_secret, GSscope)
 gc = gspread.authorize(creds)
-
 # Open exisiting Google Sheets document named Wrapped365
 sh = gc.open('Wrapped365')
+
+# How many seconds should the program wait until executing again
+wait = float(os.environ['MINUTES']) * 60.0
+
+
 # Returns top artists within a time period
-
-
 def get_top_artists(time_period):
     top_artists = sp.current_user_top_artists(limit=50, time_range=time_period)
     artist_info = []
@@ -64,7 +63,6 @@ def get_track_ids(time_frame):
 
 def get_track_features(id):
     meta = sp.track(id)
-    # meta
     name = meta['name']
     album = meta['album']['name']
     artist = meta['album']['artists'][0]['name']
@@ -77,6 +75,7 @@ def get_track_features(id):
 
 
 def insert_to_gsheet(track_ids, artist_info, time_period):
+    # List of track IDs, get meta data of tracks, and insert into Google Sheets
     tracks = []
     for i in range(len(track_ids)):
         track = get_track_features(track_ids[i])
@@ -87,6 +86,7 @@ def insert_to_gsheet(track_ids, artist_info, time_period):
     worksheet.update([df.columns.values.tolist()] + df.values.tolist())
     print(time_period + ' Tracks Done.')
 
+    # Insert top artists into Google Sheets
     df = pd.DataFrame(artist_info, columns=[
                       'name', 'spotify_url', 'artist_cover'])
     worksheet = sh.worksheet(f'{time_period} Artists')
@@ -117,19 +117,20 @@ def Wrapped():
 
         # get list of user's playlists & iterate over it to prevent duplication
         playlists = sp.current_user_playlists()
-
+        period = time_period.replace("_", " ")
         for playlist in playlists['items']:
-            if playlist['name'] == f'{time_period} - Top Tracks Wrapped':
+            if playlist['name'] == f'{period} - Top Tracks Wrapped':
                 playlist_id = playlist['id']
                 # Update songs in existing playlist
-                sp.user_playlist_replace_tracks(USERNAME, playlist_id, track_ids)
+                sp.user_playlist_replace_tracks(
+                    USERNAME, playlist_id, track_ids)
                 playlistExists = True
                 break
 
         # Create playlist
         if playlistExists == False:
-            playlist_id = sp.user_playlist_create(USERNAME, f'{time_period} - Top Tracks Wrapped', public=True, collaborative=False,
-                                                  description=f'My Top Played Tracks for {time_period}. Generated using SaznCode\'s Wrapped365 Python Project. Updated every {wait/60} minutes.')['id']
+            playlist_id = sp.user_playlist_create(USERNAME, f'{period} - Top Tracks Wrapped', public=True, collaborative=False,
+                                                  description=f'My Top Played Tracks for {period}. Generated using SaznCode\'s Wrapped365 Python Project. Updated every {wait/60} minutes.')['id']
             sp.user_playlist_add_tracks(USERNAME, playlist_id, track_ids)
             with open(f"covers/{time_period}.jpg", 'rb') as image:
                 cover_encoded = base64.b64encode(image.read()).decode("utf-8")
