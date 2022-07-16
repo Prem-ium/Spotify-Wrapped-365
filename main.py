@@ -5,6 +5,7 @@ import spotipy
 import time
 import gspread
 import json
+import base64
 import pandas as pd
 from spotipy.oauth2 import SpotifyOAuth
 from oauth2client.service_account import ServiceAccountCredentials
@@ -20,7 +21,7 @@ wait = float(os.environ['MINUTES']) * 60.0
 SPOTIPY_CLIENT = os.environ['CLIENT_ID']
 SPOTIPY_SECRET_CLIENT = os.environ['SECRET_CLIENT_ID']
 SPOTIPY_REDIRECT = os.environ['REDIRECT_URL']
-SCOPE = "user-top-read playlist-modify-private playlist-modify-public user-library-modify user-library-read playlist-read-private"
+SCOPE = "user-top-read playlist-modify-private playlist-modify-public user-library-modify user-library-read playlist-read-private ugc-image-upload"
 USERNAME = os.environ['USERNAME']
 
 
@@ -38,7 +39,6 @@ gc = gspread.authorize(creds)
 
 # Open exisiting Google Sheets document named Wrapped365
 sh = gc.open('Wrapped365')
-
 # Returns top artists within a time period
 
 
@@ -131,6 +131,9 @@ def Wrapped():
             playlist_id = sp.user_playlist_create(USERNAME, f'{time_period} - Top Tracks Wrapped', public=True, collaborative=False,
                                                   description=f'My Top Played Tracks for {time_period}. Generated using SaznCode\'s Wrapped365 Python Project. Updated every {wait/60} minutes.')['id']
             sp.user_playlist_add_tracks(USERNAME, playlist_id, track_ids)
+            with open(f"covers/{time_period}.jpg", 'rb') as image:
+                cover_encoded = base64.b64encode(image.read()).decode("utf-8")
+            sp.playlist_upload_cover_image(playlist_id, cover_encoded)
 
 
 def main():
