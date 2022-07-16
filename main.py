@@ -125,6 +125,7 @@ def Wrapped():
                 sp.user_playlist_replace_tracks(
                     USERNAME, playlist_id, track_ids)
                 playlistExists = True
+                print(f'{period} playlist updated.')
                 break
 
         # Create playlist
@@ -135,6 +136,9 @@ def Wrapped():
             with open(f"covers/{time_period}.jpg", 'rb') as image:
                 cover_encoded = base64.b64encode(image.read()).decode("utf-8")
             sp.playlist_upload_cover_image(playlist_id, cover_encoded)
+            print(f'{period} playlist created.')
+
+        print('\n\n')
 
 
 def main():
