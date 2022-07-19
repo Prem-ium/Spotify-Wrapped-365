@@ -6,6 +6,8 @@ import time
 import gspread
 import json
 import base64
+import datetime
+import apprise
 import pandas as pd
 from spotipy.oauth2 import SpotifyOAuth
 from oauth2client.service_account import ServiceAccountCredentials
@@ -39,8 +41,20 @@ sh = gc.open('Wrapped365')
 # How many seconds should the program wait until executing again
 wait = float(os.environ['MINUTES']) * 60.0
 
+apprise_alerts = os.environ.get("APPRISE_ALERTS").split(",")
 
+# Functions
+
+
+def apprise_init():
+    alerts = apprise.Apprise()
+    # Add all services from .env
+    for service in apprise_alerts:
+        alerts.add(service)
+    return alerts
 # Returns top artists within a time period
+
+
 def get_top_artists(time_period):
     top_artists = sp.current_user_top_artists(limit=50, time_range=time_period)
     artist_info = []
@@ -98,6 +112,9 @@ def insert_to_gsheet(track_ids, artist_info, time_period):
 # Wrapped-365Method
 
 
+alerts = apprise_init()
+
+
 def Wrapped():
     time_ranges = ['short_term', 'medium_term', 'long_term']
     for time_period in time_ranges:
@@ -125,7 +142,7 @@ def Wrapped():
                 sp.user_playlist_replace_tracks(
                     USERNAME, playlist_id, track_ids)
                 playlistExists = True
-                print(f'{period} playlist updated.')
+                print(f'{period} playlist updated.\n')
                 break
 
         # Create playlist
@@ -136,23 +153,27 @@ def Wrapped():
             with open(f"covers/{time_period}.jpg", 'rb') as image:
                 cover_encoded = base64.b64encode(image.read()).decode("utf-8")
             sp.playlist_upload_cover_image(playlist_id, cover_encoded)
-            print(f'{period} playlist created.')
-
-        print('\n\n')
-
+            print(f'{period} playlist created.\n')
 
 def main():
     try:
         # Infinite loop
         while True:
             Wrapped()
+            try:
+                alerts.notify(title=f'Wrapped365 Finished.', body='Top Artists and Tracks Updated.')
+            except Exception as e:
+                print('Apprise Alerts Error.\n' + e)
+                continue
             print(f'\nAll finished, sleeping for {(wait / 60)/60} hours...\n')
             time.sleep(wait)
     except Exception as e:
         print(e)
+        alerts.notify(title=f'Wrapped365 Error.', body=f'{e}')
         print('\nSomething went wrong, sleeping for 1 hour... before retrying\n')
         time.sleep(3600)
         main()
+
 
 if __name__ == '__main__':
     main()
