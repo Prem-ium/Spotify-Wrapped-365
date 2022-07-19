@@ -28,4 +28,4 @@ These are the necessary enviormental variables for the Wrapped to function prope
 - USERNAME: Your Spotify account username [can be found in Spotify account settings.]([https://developer.spotify.com/dashboard/](https://www.spotify.com/us/account/overview/?utm_source=spotify&utm_medium=menu&utm_campaign=your_account))
 - MINUTES: How many minutes should the program wait until executing again? It is ideal to allow at least 6 hours (or 360 minutes).
 - GSPREAD_KEYS: Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API,
-- APPRISE_FOUND_ALERTS:  Full list of services and their URLs available here: [found here on Apprise wiki](https://github.com/caronc/apprise/wiki).
+- APPRISE_ALERTS:  Full list of services and their URLs available here: [found here on Apprise wiki](https://github.com/caronc/apprise/wiki).
