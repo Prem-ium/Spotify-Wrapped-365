@@ -11,10 +11,7 @@ import apprise
 import pandas as pd
 from spotipy.oauth2 import SpotifyOAuth
 from oauth2client.service_account import ServiceAccountCredentials
-from keep_alive import keep_alive
 
-# Keep the Replit program going. Do not forget to use UpTimeRobot
-keep_alive()
 
 # Update with your own Spotify Credentials (Client ID, Secret Client ID, redirect, and username)
 SPOTIPY_CLIENT = os.environ['CLIENT_ID']
