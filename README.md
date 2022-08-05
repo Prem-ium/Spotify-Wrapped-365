@@ -4,7 +4,7 @@
 A python bot that utilizes the Spotipy Python library to retrieve a user's top tracks and artists. Then exports the information to Google Sheets AND automatically creates/updates top track playlists every (user specified) number of hours. 
 
 
-## Installation
+# Installation
 Clone the repository using git clone
 ```bash
   git clone https://github.com/sazncode/Spotify-Wrapped365.git
@@ -14,8 +14,8 @@ Install dependencies using pip3
   cd Spotify-Wrapped365
   pip3 install -r requirements.txt
 ```
-    
-## Set First: Spotify Developer Account
+# Configuration 
+### Set First: Spotify Developer Account
 Generate your Client ID and Client Secret by creating an app on the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/). Make sure to to include redirect urls (you can simpily put http://localhost if you aren't sure). 
 
 ### Next, Google Sheets/Drive API
@@ -32,10 +32,12 @@ If your only interest is obtaining Top Tracks on your account, you may skip this
 
 ## DESCRIPTION FOR ENV VARIABLES
 These are the necessary enviormental variables for the Wrapped to function properly. They must be added.
-- CLIENT_ID: [Found on Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)
-- SECRET_CLIENT_ID: [Found on Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)
-- REDIRECT_URL: The Redirect URL you added when creating the App on Spotify's Developer Dashboard
-- USERNAME: Your Spotify account username [can be found in Spotify account settings.]([https://developer.spotify.com/dashboard/](https://www.spotify.com/us/account/overview/?utm_source=spotify&utm_medium=menu&utm_campaign=your_account))
-- MINUTES: How many minutes should the program wait until executing again? It is ideal to allow at least 6 hours (or 360 minutes).
-- GSPREAD_KEYS: Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API,
-- APPRISE_ALERTS:  Full list of services and their URLs available here: [found here on Apprise wiki](https://github.com/caronc/apprise/wiki).
+- `CLIENT_ID`: [Found on Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)
+- `SECRET_CLIENT_ID`: [Found on Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)
+- `REDIRECT_URL`: The Redirect URL you added when creating the App on Spotify's Developer Dashboard
+- `USERNAME`: Your Spotify account username [can be found in Spotify account settings.]([https://developer.spotify.com/dashboard/](https://www.spotify.com/us/account/overview/?utm_source=spotify&utm_medium=menu&utm_campaign=your_account))
+- `MINUTES`: How many minutes should the program wait until executing again? It is ideal to allow at least 6 hours (or 360 minutes).
+- `GSPREAD_KEYS`: Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API.
+
+Optional:
+- `APPRISE_ALERTS`:  Full list of services and their URLs available here: [found here on Apprise wiki](https://github.com/caronc/apprise/wiki).
