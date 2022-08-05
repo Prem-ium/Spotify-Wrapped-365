@@ -1,6 +1,4 @@
 # Spotify Wrapped 365 
-
-<p align="center"><img src="https://socialify.git.ci/sazncode/Spotify-Wrapped365/image?description=1&amp;descriptionEditable=Top%20Tracks%20%26%20Artists%20-%20Wrapped%20365%2FYear&amp;font=Inter&amp;language=1&amp;name=1&amp;owner=1&amp;pattern=Charlie%20Brown&amp;stargazers=1&amp;theme=Dark" alt="project-image"></p>
 A python bot that utilizes the Spotipy Python library to retrieve a user's top tracks and artists. Then exports the information to Google Sheets AND automatically creates/updates top track playlists every (user specified) number of hours. 
 
 
