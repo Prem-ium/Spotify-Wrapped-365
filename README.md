@@ -3,9 +3,19 @@
 <p align="center"><img src="https://socialify.git.ci/sazncode/Spotify-Wrapped365/image?description=1&amp;descriptionEditable=Top%20Tracks%20%26%20Artists%20-%20Wrapped%20365%2FYear&amp;font=Inter&amp;language=1&amp;name=1&amp;owner=1&amp;pattern=Charlie%20Brown&amp;stargazers=1&amp;theme=Dark" alt="project-image"></p>
 A python bot that utilizes the Spotipy Python library to retrieve a user's top tracks and artists. Then exports the information to Google Sheets AND automatically creates/updates top track playlists every (user specified) number of hours. 
 
-## Installation
 
-### Set First: Spotify Developer Account
+## Installation
+Clone the repository using git clone
+```bash
+  git clone https://github.com/sazncode/Spotify-Wrapped365.git
+  ```
+Install dependencies using pip3
+```bash
+  cd Spotify-Wrapped365
+  pip3 install -r requirements.txt
+```
+    
+## Set First: Spotify Developer Account
 Generate your Client ID and Client Secret by creating an app on the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/). Make sure to to include redirect urls (you can simpily put http://localhost if you aren't sure). 
 
 ### Next, Google Sheets/Drive API
