@@ -11,7 +11,9 @@ import apprise
 import pandas as pd
 from spotipy.oauth2 import SpotifyOAuth
 from oauth2client.service_account import ServiceAccountCredentials
-
+from dotenv import load_dotenv
+# Load ENV
+load_dotenv()
 
 # Update with your own Spotify Credentials (Client ID, Secret Client ID, redirect, and username)
 SPOTIPY_CLIENT = os.environ['CLIENT_ID']
