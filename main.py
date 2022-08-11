@@ -45,7 +45,8 @@ if GOOGLE_SHEETS:
     sh = gc.open('Wrapped365')
 
 # How many seconds should the program wait until executing again
-WAIT = float(os.environ.get('MINUTES', '360') * 60.0)
+WAIT = float(os.environ.get('MINUTES', 360)) * 60.0
+
 # Set up Apprise, if enabled
 APPRISE_ALERTS = os.environ.get("APPRISE_ALERTS")
 if APPRISE_ALERTS:
