@@ -19,10 +19,10 @@ These are the necessary enviormental variables for the Wrapped to function prope
 - `SECRET_CLIENT_ID`: [Found on Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)
 - `REDIRECT_URL`: The Redirect URL you added when creating the App on Spotify's Developer Dashboard
 - `USERNAME`: Your Spotify account username [can be found in Spotify account settings.]([https://developer.spotify.com/dashboard/](https://www.spotify.com/us/account/overview/?utm_source=spotify&utm_medium=menu&utm_campaign=your_account))
-- `MINUTES`: How many minutes should the program wait until executing again? It is ideal to allow at least 6 hours (or 360 minutes).
 
 Optional:
 - `GSPREAD_KEYS`: Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API.
+- `MINUTES`: How many minutes should the program wait until executing again? It is ideal to allow at least 6 hours (or 360 minutes).
 - `APPRISE_ALERTS`:  Full list of services and their URLs available here: [found here on Apprise wiki](https://github.com/caronc/apprise/wiki).
 # Configuration 
 
