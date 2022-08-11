@@ -166,7 +166,7 @@ def main():
             if APPRISE_ALERTS:
                 alerts.notify(title=f'Wrapped365 Finished!', body='Top Artists and Tracks Updated!')
 
-            print(f'\nAll finished, sleeping for {WAIT / 120} hours...\n')
+            print(f'\nAll finished, sleeping for {WAIT / 3600} hours...\n')
             time.sleep(WAIT)
 
     except Exception as e:
