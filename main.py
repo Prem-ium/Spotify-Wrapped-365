@@ -1,5 +1,5 @@
 # Sazn Codes (Prem Patel)
-# https://github.com/sazncode/Spotify-Wrapped365
+# https://github.com/sazncode/Spotify-Wrapped-365
 import os
 import spotipy
 import time
