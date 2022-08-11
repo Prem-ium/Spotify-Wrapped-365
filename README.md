@@ -20,19 +20,19 @@ These are the necessary enviormental variables for the Wrapped to function prope
 - `REDIRECT_URL`: The Redirect URL you added when creating the App on Spotify's Developer Dashboard
 - `USERNAME`: Your Spotify account username [can be found in Spotify account settings.]([https://developer.spotify.com/dashboard/](https://www.spotify.com/us/account/overview/?utm_source=spotify&utm_medium=menu&utm_campaign=your_account))
 - `MINUTES`: How many minutes should the program wait until executing again? It is ideal to allow at least 6 hours (or 360 minutes).
-- `GSPREAD_KEYS`: Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API.
 
 Optional:
+- `GSPREAD_KEYS`: Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API.
 - `APPRISE_ALERTS`:  Full list of services and their URLs available here: [found here on Apprise wiki](https://github.com/caronc/apprise/wiki).
 # Configuration 
+
 ### Set First: Spotify Developer Account
 Generate your Client ID and Client Secret by creating an app on the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/). Make sure to to include redirect urls (you can simpily put http://localhost if you aren't sure). 
 
 ### Next, Google Sheets/Drive API
 
 Note: 
-If your only interest is obtaining Top Tracks on your account, you may skip this step entirely and simpily comment out (using #) or deleting the gsheet lines of code.
-
+GSPREAD_KEYS in .env is now optional. If you have no interest in retrieving top artists, you can skip this section. Otherwise, follow the following tutorial to set up your GSPREAD_KEYS:
 1. Sign into [Google Cloud Console](https://console.cloud.google.com/) & create your APP
 2. Enable Google Sheets and Google Drive APIs
 3. Head to API & Services -> Credentials ->  Create Credentials -> Service Account. Go through the prompts
