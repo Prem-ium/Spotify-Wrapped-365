@@ -5,7 +5,7 @@ A python bot that utilizes the Spotipy Python library to retrieve a user's top t
 # Installation
 Clone the repository using git clone
 ```bash
-  git clone https://github.com/sazncode/Spotify-Wrapped365.git
+  git clone https://github.com/sazncode/Spotify-Wrapped-365.git
   ```
 Install dependencies using pip3
 ```bash
