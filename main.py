@@ -151,8 +151,8 @@ def Wrapped():
             sp.playlist_upload_cover_image(playlist_id, cover_encoded)
             print(f'{period} Top Tracks playlist created.\n')
         
-        if APPRISE_ALERTS:
-            alerts.notify(title=f'Wrapped365 Finished!', body='Top Artists and Tracks Updated!')
+    if APPRISE_ALERTS:
+        alerts.notify(title=f'Wrapped365 Finished!', body='Top Artists and Tracks Updated!')
 
 def main():
     while True:
