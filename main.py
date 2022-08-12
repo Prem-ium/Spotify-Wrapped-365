@@ -52,17 +52,14 @@ APPRISE_ALERTS = os.environ.get("APPRISE_ALERTS")
 if APPRISE_ALERTS:
     APPRISE_ALERTS = APPRISE_ALERTS.split(",")
 
-# Functions
-
 def apprise_init():
     alerts = apprise.Apprise()
     # Add all services from .env
     for service in APPRISE_ALERTS:
         alerts.add(service)
     return alerts
+
 # Returns top artists within a time period
-
-
 def get_top_artists(time_period):
     top_artists = sp.current_user_top_artists(limit=50, time_range=time_period)
     artist_info = []
@@ -72,8 +69,6 @@ def get_top_artists(time_period):
     return artist_info
 
 # Returns id of tracks
-
-
 def get_track_ids(time_frame):
     track_ids = []
     for song in time_frame['items']:
@@ -81,8 +76,6 @@ def get_track_ids(time_frame):
     return track_ids
 
 # Returns meta data of tracks
-
-
 def get_track_features(id):
     meta = sp.track(id)
     name = meta['name']
@@ -94,8 +87,6 @@ def get_track_features(id):
     return track_info
 
 # insert tracks into google sheets
-
-
 def insert_to_gsheet(track_ids, artist_info, time_period):
     # List of track IDs, get meta data of tracks, and insert into Google Sheets
     tracks = []
@@ -117,8 +108,12 @@ def insert_to_gsheet(track_ids, artist_info, time_period):
     return tracks
 
 def Wrapped():
+    if APPRISE_ALERTS:
+        alerts.notify(title=f'Wrapped365 Starting...', body='Top Artists and Tracks starting to update...')
+
     time_ranges = ['short_term', 'medium_term', 'long_term']
     for time_period in time_ranges:
+
         # Reset PlayList Exist variable
         playlistExists = False
 
@@ -129,6 +124,7 @@ def Wrapped():
 
         # Get Top Artists
         top_artists = get_top_artists(time_period)
+
         if GOOGLE_SHEETS:
             # Insert Top Tracks & Artists into Google Sheets
             insert_to_gsheet(track_ids, top_artists, time_period)
@@ -142,41 +138,35 @@ def Wrapped():
                 # Update songs in existing playlist
                 sp.user_playlist_replace_tracks(USERNAME, playlist_id, track_ids)
                 playlistExists = True
-                print(f'{period} playlist updated.\n')
+                print(f'{period} Top Tracks playlist updated.\n')
                 break
 
         # Create playlist
         if not playlistExists:
             playlist_id = sp.user_playlist_create(USERNAME, f'{period} - Top Tracks Wrapped', public=True, collaborative=False,
-                                                  description=f'My Top Played Tracks for {period}. Generated using SaznCode\'s Wrapped365 Python Project. Updated every {WAIT/60} minutes. https://github.com/sazncode/Spotify-Wrapped-365')['id']
+                                                  description=f'My Top Played Tracks for {period}. Generated using SaznCode\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. https://github.com/sazncode/Spotify-Wrapped-365')['id']
             sp.user_playlist_add_tracks(USERNAME, playlist_id, track_ids)
             with open(f"covers/{time_period}.jpg", 'rb') as image:
                 cover_encoded = base64.b64encode(image.read()).decode("utf-8")
             sp.playlist_upload_cover_image(playlist_id, cover_encoded)
-            print(f'{period} playlist created.\n')
+            print(f'{period} Top Tracks playlist created.\n')
+        
+        if APPRISE_ALERTS:
+            alerts.notify(title=f'Wrapped365 Finished!', body='Top Artists and Tracks Updated!')
 
 def main():
-    try:
-        alerts = apprise_init()
-        
-        while True:
-            if APPRISE_ALERTS:
-                alerts.notify(title=f'Wrapped365 Starting...', body='Top Artists and Tracks starting to update...')
+    while True:
+        try:
             Wrapped()
-            if APPRISE_ALERTS:
-                alerts.notify(title=f'Wrapped365 Finished!', body='Top Artists and Tracks Updated!')
-
             print(f'\nAll finished, sleeping for {WAIT / 3600} hours...\n')
             time.sleep(WAIT)
-
-    except Exception as e:
-        print(f'Exception:\n{e}\n\n{traceback.format_exc()}')
-        if APPRISE_ALERTS:
-            alerts.notify(title=f'Wrapped365 Crashed.', body=f'{e}\nAttempting to restart in one hour...')
-        print(f'\Exception:\n{e}\n\n{traceback.format_exc()}\n\n')
-        time.sleep(3600)
-        main()
-
+        except Exception as e:
+            print(f'\Exception:\n{e}\n\n{traceback.format_exc()}\n\n')
+            if APPRISE_ALERTS:
+                alerts.notify(title=f'Wrapped365 Exception.', body=f'{e}\nAttempting to restart in one hour...')
+            time.sleep(3600)
+            continue
 
 if __name__ == '__main__':
+    alerts = apprise_init()
     main()
