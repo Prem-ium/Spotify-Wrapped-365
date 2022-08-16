@@ -168,7 +168,8 @@ def main():
             continue
 
 if __name__ == '__main__':
-    alerts = apprise_init()
+    if APPRISE_ALERTS:
+        alerts = apprise_init()
     # Initialize Spotify
     sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
                      redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
