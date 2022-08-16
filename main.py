@@ -26,10 +26,6 @@ else:
     SPOTIPY_REDIRECT = os.environ['REDIRECT_URL']
     SCOPE = "user-top-read playlist-modify-private playlist-modify-public user-library-modify user-library-read playlist-read-private ugc-image-upload"
     USERNAME = os.environ['USERNAME']
-    
-    # Initalize Spotipy
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
-                     redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
 
 # Initialize Google Sheets, if enabled
 GOOGLE_SHEETS = os.environ.get("GSPREAD_KEYS", False)
@@ -108,6 +104,9 @@ def insert_to_gsheet(track_ids, artist_info, time_period):
     return tracks
 
 def Wrapped():
+    # Re-Initialize Spotify
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
+                     redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
     if APPRISE_ALERTS:
         alerts.notify(title=f'Wrapped365 Starting...', body='Top Artists and Tracks starting to update...')
 
@@ -163,10 +162,13 @@ def main():
         except Exception as e:
             print(f'\Exception:\n{e}\n\n{traceback.format_exc()}\n\n')
             if APPRISE_ALERTS:
-                alerts.notify(title=f'Wrapped365 Exception.', body=f'{e}\nAttempting to restart in one hour...')
-            time.sleep(3600)
+                alerts.notify(title=f'Wrapped365 Exception.', body=f'{e}\nAttempting to restart in 15 minutes...')
+            time.sleep(900)
             continue
 
 if __name__ == '__main__':
     alerts = apprise_init()
+    # Initialize Spotify
+    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
+                     redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
     main()
