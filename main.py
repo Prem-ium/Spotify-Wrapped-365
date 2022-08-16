@@ -49,11 +49,12 @@ if APPRISE_ALERTS:
     APPRISE_ALERTS = APPRISE_ALERTS.split(",")
 
 def apprise_init():
-    alerts = apprise.Apprise()
-    # Add all services from .env
-    for service in APPRISE_ALERTS:
-        alerts.add(service)
-    return alerts
+    if APPRISE_ALERTS:
+        alerts = apprise.Apprise()
+        # Add all services from .env
+        for service in APPRISE_ALERTS:
+            alerts.add(service)
+        return alerts
 
 # Returns top artists within a time period
 def get_top_artists(time_period):
@@ -162,8 +163,8 @@ def main():
         except Exception as e:
             print(f'\Exception:\n{e}\n\n{traceback.format_exc()}\n\n')
             if APPRISE_ALERTS:
-                alerts.notify(title=f'Wrapped365 Exception.', body=f'{e}\nAttempting to restart in 10 minutes...')
-            time.sleep(600)
+                alerts.notify(title=f'Wrapped365 Exception.', body=f'{e}\nAttempting to restart in 15 minutes...')
+            time.sleep(900)
             continue
 
 if __name__ == '__main__':
