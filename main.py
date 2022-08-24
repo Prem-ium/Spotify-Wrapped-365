@@ -16,8 +16,6 @@ from dotenv import load_dotenv
 # Load ENV
 load_dotenv()
 
-# Connection: sudo python3 -m pip install "requests[security]"
-
 # Spotify Credentials
 if not os.environ["CLIENT_ID"] or not os.environ["SECRET_CLIENT_ID"] or not os.environ["REDIRECT_URL"] or not os.environ["USERNAME"]:
     raise Exception("Variables are missing within the .env file. Please ensure you have CLIENT_ID, SECRET_CLIENT_ID, REDIRECT_URL, and USERNAME set.")
@@ -107,9 +105,6 @@ def insert_to_gsheet(track_ids, artist_info, time_period):
     return tracks
 
 def Wrapped():
-    # Re-Initialize Spotify
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
-                     redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
     if APPRISE_ALERTS:
         alerts.notify(title=f'Wrapped365 Starting...', body='Top Artists and Tracks starting to update...')
 
