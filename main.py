@@ -16,6 +16,8 @@ from dotenv import load_dotenv
 # Load ENV
 load_dotenv()
 
+# Connection: sudo python3 -m pip install "requests[security]"
+
 # Spotify Credentials
 if not os.environ["CLIENT_ID"] or not os.environ["SECRET_CLIENT_ID"] or not os.environ["REDIRECT_URL"] or not os.environ["USERNAME"]:
     raise Exception("Variables are missing within the .env file. Please ensure you have CLIENT_ID, SECRET_CLIENT_ID, REDIRECT_URL, and USERNAME set.")
@@ -124,14 +126,16 @@ def Wrapped():
 
         # Get Top Artists
         top_artists = get_top_artists(time_period)
-
+        period = time_period.replace("_", " ")
         if GOOGLE_SHEETS:
             # Insert Top Tracks & Artists into Google Sheets
             insert_to_gsheet(track_ids, top_artists, time_period)
-
+        else:
+            df = pd.DataFrame(top_artists, columns=['name', 'spotify_url', 'artist_cover'])
+            print(f'\n\nTop {period} Artists:\n{df}\n\n\n')
         # get list of user's playlists & iterate over it to prevent duplication
         playlists = sp.current_user_playlists()
-        period = time_period.replace("_", " ")
+        
         for playlist in playlists['items']:
             if playlist['name'] == f'{period} - Top Tracks Wrapped':
                 playlist_id = playlist['id']
@@ -150,6 +154,7 @@ def Wrapped():
                 cover_encoded = base64.b64encode(image.read()).decode("utf-8")
             sp.playlist_upload_cover_image(playlist_id, cover_encoded)
             print(f'{period} Top Tracks playlist created.\n')
+        print(f'---------------------------------------------------------------------\n')
         
     if APPRISE_ALERTS:
         alerts.notify(title=f'Wrapped365 Finished!', body='Top Artists and Tracks Updated!')
