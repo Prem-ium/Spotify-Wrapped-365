@@ -1,5 +1,5 @@
-# Sazn Codes (Prem Patel)
-# https://github.com/sazncode/Spotify-Wrapped-365
+# Prem-ium (Prem Patel)
+# https://github.com/Prem-ium/Spotify-Wrapped-365
 import os
 import spotipy
 import time
@@ -143,7 +143,7 @@ def Wrapped():
         # Create playlist
         if not playlistExists:
             playlist_id = sp.user_playlist_create(USERNAME, f'{period} - Top Tracks Wrapped', public=True, collaborative=False,
-                                                  description=f'My Top Played Tracks for {period}. Generated using SaznCode\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. https://github.com/sazncode/Spotify-Wrapped-365')['id']
+                                                  description=f'My Top Played Tracks for {period}. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. https://github.com/Prem-ium/Spotify-Wrapped-365')['id']
             sp.user_playlist_add_tracks(USERNAME, playlist_id, track_ids)
             with open(f"covers/{time_period}.jpg", 'rb') as image:
                 cover_encoded = base64.b64encode(image.read()).decode("utf-8")
