@@ -1,6 +1,7 @@
 # Spotify Wrapped 365 🎶
 
 Generate a playlist composed of your top played tracks on Spotify over the course of a month, 6 months, and the all-time Top Tracks of your account! 
+![image](https://user-images.githubusercontent.com/80719066/202199720-a1203f3a-7d8b-441c-bc91-911490a073ab.png)
 
 ## Features
 
