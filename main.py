@@ -40,6 +40,11 @@ if GOOGLE_SHEETS:
     # Open exisiting Google Sheets document named Wrapped365
     sh = gc.open('Wrapped365')
 
+# Whether to use keep_alive.py
+if (os.environ.get("KEEP_ALIVE", "false").lower() == "true"):
+    from keep_alive import keep_alive
+    keep_alive()
+
 # How many seconds should the program wait until executing again
 WAIT = float(os.environ.get('MINUTES', 360)) * 60.0
 

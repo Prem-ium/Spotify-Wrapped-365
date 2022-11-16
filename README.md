@@ -1,4 +1,4 @@
-# Spotify Wrapped 265 
+# Spotify Wrapped 365 🎶
 
 Generate a playlist composed of your top played tracks on Spotify over the course of a month, 6 months, and the all-time Top Tracks of your account! 
 
@@ -24,6 +24,8 @@ To run this project, you will need to add the following environment variables to
 ##### Optional .env:
 `MINUTES`: Number of minutes the program should wait before updating Top Tracks playlist. Defaults to 360 minutes (or 6 hours).
 
+`KEEP_ALIVE`: Whether to run the flask server or not to keep program from sleeping on replit. Defaults to False.
+
 `APPRISE_ALERTS`:  Full list of services and their URLs available here: [found here on Apprise wiki](https://github.com/caronc/apprise/wiki).
 
 `GSPREAD_KEYS`: Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API.
@@ -39,7 +41,7 @@ To run this project, you will need to add the following environment variables to
 
 #### Replit (Optional, Recommended)
 1. Login/Create a [Replit](https://replit.com/) account and create a new Python repl.
-2. Setup .env within Replit's Secret tab & go through [Installation](#installation). Optionally, move all files out of folder for ease of navigation, replace empty/old main.py.
+2. Setup .env within Replit's Secret tab (set `KEEP_ALIVE` to True) & go through [Installation](#installation). Optionally, move all files out of folder for ease of navigation, replace empty/old main.py.
 3. Run the program and copy URL in the Flask webview. It should be something similar to:
 `https://{Name of Repl}.{Repl username}.repl.co/` 
 4. Create an account on [Uptime Robot](https://uptimerobot.com/), Click 'Add New Monitor',HTTP monitor type, name the monitor anything you'd like, paste your copied link into URL, set interval to 5 minutes, timeout to 30 seconds, and create the monitor.
