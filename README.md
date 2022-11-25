@@ -1,6 +1,7 @@
 # Spotify Wrapped 365 🎶
 
 Generate a playlist composed of your top played tracks on Spotify over the course of a month, 6 months, and the all-time Top Tracks of your account! 
+![image](https://user-images.githubusercontent.com/80719066/202199720-a1203f3a-7d8b-441c-bc91-911490a073ab.png)
 
 ## Features
 
@@ -54,6 +55,8 @@ To run this project, you will need to add the following environment variables to
 6. Share the Google Sheet Document with the email of your service account, give editor permissions. The email can be found back on Google's Cloud Console Credentials or within the JSON file you downloaded. It would look something like: wrapped-test@wrapped-test943892.iam.gserviceaccount.com
 
 ## Installation
+This script can be used locally or using Docker.
+### Python
 Clone the repository & Install dependencies
 ```bash
   git clone https://github.com/Prem-ium/Spotify-Wrapped-365.git
@@ -64,4 +67,20 @@ Finally, you're ready to run the script!
 ```bash
   python main.py
 ```
+### Docker
+1. Run script locally with Python & generate cache file.
+2. Download and install Docker on your system
+3. Configure your `.env` file (See below and example for options)
+4. 
+   To build the image, cd into the repository and run:
+   ```sh
+   docker build -t spotify-wrapped .
+   ```
+   Then start the bot with:
+   ```sh
+   docker run -it --env-file ./.env --restart unless-stopped --name spotify-wrapped spotify-wrapped
+   ```
+
+
+5. Let the bot log in and begin working. DO NOT PRESS `CTRL-c`. This will kill the container and the bot. To exit the logs view, press `CTRL-p` then `CTRL-q`. This will exit the logs view but let the bot keep running.
 

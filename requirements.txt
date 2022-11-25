@@ -1,6 +1,6 @@
-apprise==0.9.9
-gspread==4.0.1
-oauth2client==4.1.3
-pandas==1.3.4
-python-dotenv==0.21.0
-spotipy==2.19.0
+apprise
+gspread
+oauth2client
+pandas
+python-dotenv
+spotipy
