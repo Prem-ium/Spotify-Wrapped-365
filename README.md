@@ -36,9 +36,11 @@ To run this project, you will need to add the following environment variables to
 #### Spotify Developer Credentials (Required)
 1. Head over to [Spotify Developer's Dashboard](https://developer.spotify.com/dashboard/). Login or create an account using your Spotify. 
 2. Create a new Application. Name it anything you want to, add any description, and agree to TOS.
-3. Click on 'Edit Settings' and add redirect URL you've set in your .env file & save.
+3. Click on 'Edit Settings' and add redirect URL you've set in your .env file & save. Examples:
+<img src="https://user-images.githubusercontent.com/80719066/202246758-b0472b8c-b03f-44fc-8e1a-c161c7746a93.png" style="width: 50%;"></img>
 4. Click 'Show Client Secret'
 5. Copy/paste Client ID into `CLIENT_ID` and Secret Client ID into `SECRET_CLIENT_ID` within your .env file.
+<img src="https://user-images.githubusercontent.com/80719066/202246004-f7307806-69ec-4489-975b-beb71e6637b3.png" style="width: 50%;"></img>
 
 #### Replit (Optional, Recommended)
 1. Login/Create a [Replit](https://replit.com/) account and create a new Python repl.
