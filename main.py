@@ -1,16 +1,17 @@
 # Prem-ium (Prem Patel)
-# https://github.com/Prem-ium/Spotify-Wrapped-365
-import os
+#🎵 Python script that generates Spotify playlist full of top played tracks & artists. 🎶
+# Github Repository: https://github.com/Prem-ium/Spotify-Wrapped-365
+
+import os, time, json, base64, traceback
+
 import spotipy
-import time
 import gspread
-import json
-import base64
-import traceback
 import apprise
 import pandas as pd
+
 from spotipy.oauth2 import SpotifyOAuth
 from oauth2client.service_account import ServiceAccountCredentials
+
 from dotenv import load_dotenv
 
 # Load ENV
@@ -137,10 +138,11 @@ def Wrapped():
         playlists = sp.current_user_playlists()
         
         for playlist in playlists['items']:
-            if playlist['name'] == f'{period} - Top Tracks Wrapped':
+            if playlist['name'] == f'{period} - Top Tracks Wrapped': 
                 playlist_id = playlist['id']
                 # Update songs in existing playlist
                 sp.user_playlist_replace_tracks(USERNAME, playlist_id, track_ids)
+                sp.user_playlist_change_details(USERNAME, playlist_id, description=f'My Top Played Tracks for {period}. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. https://github.com/Prem-ium/Spotify-Wrapped-365')
                 playlistExists = True
                 print(f'{period} Top Tracks playlist updated.\n')
                 break
@@ -163,7 +165,7 @@ def main():
     while True:
         try:
             Wrapped()
-            print(f'\nAll finished, sleeping for {WAIT / 3600} hours...\n')
+            print(f'\nAll done!\nThanks for using Prem-ium\'s Wrapped 365 project, please share it with your friends!\nSleeping for {WAIT / 3600} hours until updating your stats...\n')
             time.sleep(WAIT)
         except Exception as e:
             print(f'\Exception:\n{e}\n\n{traceback.format_exc()}\n\n')

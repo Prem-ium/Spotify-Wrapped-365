@@ -1,4 +1,5 @@
 .env
 .vscode/
 .cache*
+testing.py
 ```
