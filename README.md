@@ -4,12 +4,13 @@ Generate a playlist composed of your top played tracks on Spotify over the cours
 ![image](https://user-images.githubusercontent.com/80719066/202199720-a1203f3a-7d8b-441c-bc91-911490a073ab.png)
 
 ## Features
-
-- Generate Top Played Tracks & Artists
-- Automatically update any existing Top Tracks playlist
-- Apprise Alerts/Notifications every update (Optional)
-- Google Sheets Automation (Optional)
-- [Replit](https://replit.com/) support (Running program online 24/7 for free!)
+- Generate Top Tracks Playlist that auto-updates!
+- Generate List of Top Played Artists
+- Optional Apprise Alerts/Notifications upon Program Execution/Playlist Update
+- Google Sheets Compatiable. 
+- Keep_Alive Flask Server & [Replit](https://replit.com/) compatiable (Run Program 24/7, no computer required)
+- Docker Support (In Addition to Docker Quickstart Bat File)
+- Optional Recommended Tracks & Artists (Seperate Playlist)
 
 ## Environment Variables
 To run this project, you will need to add the following environment variables to your .env file (see .env.example for a reference):
@@ -24,6 +25,10 @@ To run this project, you will need to add the following environment variables to
 
 ##### Optional .env:
 `MINUTES`: Number of minutes the program should wait before updating Top Tracks playlist. Defaults to 360 minutes (or 6 hours).
+
+`PUBLIC_PLAYLIST`: Boolean value indicating whether to create a public playlist. Defaults to True.
+
+`RECOMMENDATIONS`: Boolean value indicating whether to generate recommendations (tracks playlist and artists recommendations). Defaults to False.
 
 `KEEP_ALIVE`: Whether to run the flask server or not to keep program from sleeping on replit. Defaults to False.
 
@@ -90,6 +95,15 @@ Finally, you're ready to run the script!
 ### 🎧 What I've been listening to
 
 [<img src="covers/short_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/41FgHkzQ2wf4v8MtoITL77?si=c4c016d8bdbf411a)   [<img src="covers/medium_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/657cuGMmf1CnJEeMhfwgnK?si=154abf33ddd64a20)  [<img src="covers/long_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/42TRuidms91LuMajAIu5xI?si=8a22e2ccb6b9445f)
+
+## Donations
+If you find my project helpful and would like to support its development, please consider making a donation. Every little bit helps and is greatly appreciated!
+
+You can donate by clicking on the following button:
+<div style="display:grid;justify-content:center;"><a href="https://www.buymeacoffee.com/prem.ium" target="_blank">
+        <img src="https://raw.githubusercontent.com/Prem-ium/youtube-analytics-bot/main/output-examples/media/coffee-logo.png" alt="Buy Me A Coffee" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;" ></a></div>
+
+Thank you for your support!
 
 #### Final Remarks
 How to Get Spotify Wrapped. 365 days a year. While everyone else google searches 'how to see / check / find spotify wrapped' you'll have access to your top played tracks and artists all year long! 
