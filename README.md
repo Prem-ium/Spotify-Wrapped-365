@@ -94,7 +94,12 @@ Finally, you're ready to run the script!
 5. Let the bot log in and begin working. DO NOT PRESS `CTRL-c`. This will kill the container and the bot. To exit the logs view, press `CTRL-p` then `CTRL-q`. This will exit the logs view but let the bot keep running.
 
 
-### 🎧 What I've been listening to
+## License
+
+This repository is using the [MIT](https://choosealicense.com/licenses/mit/) license.
+
+
+## 🎧 What I've been listening to
 
 [<img src="covers/short_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/41FgHkzQ2wf4v8MtoITL77?si=c4c016d8bdbf411a)   [<img src="covers/medium_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/657cuGMmf1CnJEeMhfwgnK?si=154abf33ddd64a20)  [<img src="covers/long_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/42TRuidms91LuMajAIu5xI?si=8a22e2ccb6b9445f)
 
@@ -107,7 +112,7 @@ You can donate by clicking on the following button:
 
 Thank you for your support!
 
-#### Final Remarks
+## Final Remarks
 How to Get Spotify Wrapped. 365 days a year. While everyone else google searches 'how to see / check / find spotify wrapped' you'll have access to your top played tracks and artists all year long! 
 
 As previously mentioned however, I strongly recommend utilizing this repository using a service such as [Replit](https://replit.com/) & [UpTimeRobot](https://uptimerobot.com/) as they will allow you the program to run without any computer resource cost to you. 
