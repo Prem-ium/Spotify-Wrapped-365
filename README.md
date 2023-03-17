@@ -34,6 +34,8 @@ To run this project, you will need to add the following environment variables to
 
 `APPRISE_ALERTS`:  Full list of services and their URLs available here: [found here on Apprise wiki](https://github.com/caronc/apprise/wiki).
 
+`TZ`: Your desired Time-Zone. Should be formatted from the [IANA TZ Database](https://www.iana.org/time-zones). Defaults to `America/New York`
+
 `GSPREAD_KEYS`: Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API.
 
 

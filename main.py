@@ -1,8 +1,29 @@
+# MIT License
+# Copyright (c) 2023 Prem Patel
+# 
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+# 
+# The above copyright notice and this permission notice shall be included in all
+# copies or substantial portions of the Software.
+# 
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
 # Prem-ium (Prem Patel)
 # 🎵 Python script that generates Spotify playlist full of top played tracks & artists. 🎶
 # Github Repository: https://github.com/Prem-ium/Spotify-Wrapped-365
 
-import os, time, json, base64, traceback
+import os, time, json, base64, traceback, datetime
 
 import spotipy
 import gspread
@@ -12,6 +33,7 @@ import pandas                           as pd
 
 from spotipy.oauth2                     import SpotifyOAuth
 from oauth2client.service_account       import ServiceAccountCredentials
+from pytz                               import timezone
 from dotenv                             import load_dotenv
 
 # Load ENV
@@ -61,6 +83,8 @@ RECCOMENDATIONS = True if os.environ.get(
 APPRISE_ALERTS = os.environ.get("APPRISE_ALERTS")
 if APPRISE_ALERTS:
     APPRISE_ALERTS = APPRISE_ALERTS.split(",")
+
+TZ = timezone(os.environ.get("TZ", "America/New_York"))
 
 def apprise_init():
     if APPRISE_ALERTS:
@@ -228,7 +252,7 @@ def Wrapped():
                 sp.user_playlist_replace_tracks(
                     USERNAME, playlist_id, track_ids)
                 sp.user_playlist_change_details(
-                    USERNAME, playlist_id, description=f'My Top Played Tracks for {period}. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. https://github.com/Prem-ium/Spotify-Wrapped-365')
+                    USERNAME, playlist_id, description=f'{period} Top Played Tracks. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. Last Updated {datetime.datetime.now(TZ).strftime("%H:%M %m/%d")} https://github.com/Prem-ium/Spotify-Wrapped-365')
                 playlistExists = True
                 print(f'\n{period} Top Tracks playlist updated.\n\n')
                 break
@@ -236,16 +260,19 @@ def Wrapped():
         # Create playlist
         if not playlistExists:
             playlist_id = sp.user_playlist_create(USERNAME, f'{period} - Top Tracks Wrapped', public=PLAYLIST_TYPE, collaborative=False,
-                                                  description=f'My Top Played Tracks for {period}. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. https://github.com/Prem-ium/Spotify-Wrapped-365')['id']
+                                                  description=f'{period} Top Played Tracks. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. Last Updated {datetime.datetime.now(TZ).strftime("%H:%M %m/%d")} https://github.com/Prem-ium/Spotify-Wrapped-365')['id']
             sp.user_playlist_add_tracks(USERNAME, playlist_id, track_ids)
             with open(f"covers/{time_period}.jpg", 'rb') as image:
                 cover_encoded = base64.b64encode(image.read()).decode("utf-8")
             sp.playlist_upload_cover_image(playlist_id, cover_encoded)
             print(f'\n{period} Top Tracks playlist created.\n\n')
-
+    try:
         if RECCOMENDATIONS:
             generate_recommended(time_period, playlist_id,
                                  playlists=sp.current_user_playlists())
+    except Exception as e:  
+        print(f'\nException:\n{e}\n\n{traceback.format_exc()}\n\n')
+        pass
 
         print(f'------------------------------------------------------------------------------------------------------------------------------------------\n')
 
