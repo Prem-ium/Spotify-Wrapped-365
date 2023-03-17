@@ -51,6 +51,31 @@ else:
     SCOPE = "user-top-read playlist-modify-private playlist-modify-public user-library-modify user-library-read playlist-read-private ugc-image-upload"
     USERNAME = os.environ['USERNAME']
 
+    # Initialize Spotify
+    SP = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
+                                                   redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
+    USER_ID = SP.current_user()['id']
+
+# Whether to use keep_alive.py
+if (os.environ.get("KEEP_ALIVE", "false").lower() == "true"):
+    from keep_alive                     import keep_alive
+    keep_alive()
+
+PLAYLIST_TYPE = True if os.environ.get(
+    "PUBLIC_PLAYLIST", "true").lower() == "true" else False
+
+# How many seconds should the program wait until executing again
+WAIT = float(os.environ.get('MINUTES', 360)) * 60.0
+
+RECCOMENDATIONS = True if os.environ.get("RECCOMENDATIONS", "False").lower() == "true" else False
+
+# Set up Apprise, if enabled
+APPRISE_ALERTS = os.environ.get("APPRISE_ALERTS")
+if APPRISE_ALERTS:
+    APPRISE_ALERTS = APPRISE_ALERTS.split(",")
+
+TZ = timezone(os.environ.get("TZ", "America/New_York"))
+
 # Initialize Google Sheets, if enabled
 GOOGLE_SHEETS = os.environ.get("GSPREAD_KEYS", False)
 if GOOGLE_SHEETS:
@@ -65,46 +90,23 @@ if GOOGLE_SHEETS:
     # Open exisiting Google Sheets document named Wrapped365
     sh = gc.open('Wrapped365')
 
-# Whether to use keep_alive.py
-if (os.environ.get("KEEP_ALIVE", "false").lower() == "true"):
-    from keep_alive import keep_alive
-    keep_alive()
-
-PLAYLIST_TYPE = True if os.environ.get(
-    "PUBLIC_PLAYLIST", "true").lower() == "true" else False
-
-# How many seconds should the program wait until executing again
-WAIT = float(os.environ.get('MINUTES', 360)) * 60.0
-
-RECCOMENDATIONS = True if os.environ.get(
-    "RECCOMENDATIONS", "False").lower() == "true" else False
-
-# Set up Apprise, if enabled
-APPRISE_ALERTS = os.environ.get("APPRISE_ALERTS")
-if APPRISE_ALERTS:
-    APPRISE_ALERTS = APPRISE_ALERTS.split(",")
-
-TZ = timezone(os.environ.get("TZ", "America/New_York"))
-
 def apprise_init():
     if APPRISE_ALERTS:
         alerts = apprise.Apprise()
-        # Add all services from .env
         for service in APPRISE_ALERTS:
             alerts.add(service)
         return alerts
 
 # Returns top artists within a time period
 def get_top_artists(time_period):
-    top_artists = sp.current_user_top_artists(limit=50, time_range=time_period)
+    top_artists = SP.current_user_top_artists(limit=50, time_range=time_period)
     artist_info = []
     for artist in top_artists['items']:
         if GOOGLE_SHEETS:
             artist_info.append([artist['name'], artist['external_urls']
                             ['spotify'], artist['images'][0]['url']])
         else:
-            artist_info.append([artist['name'], artist['external_urls']
-                            ['spotify']])
+            artist_info.append([artist['name'], artist['external_urls']['spotify']])
     return artist_info
 
 # Returns id of tracks
@@ -116,7 +118,7 @@ def get_track_ids(time_frame):
 
 # Returns meta data of tracks
 def get_track_features(id):
-    meta = sp.track(id)
+    meta = SP.track(id)
     name = meta['name']
     album = meta['album']['name']
     artist = meta['album']['artists'][0]['name']
@@ -147,134 +149,110 @@ def insert_to_gsheet(track_ids, artist_info, time_period):
 
     return tracks
 
+def update_playlist(playlists, playlistTitle, playlistDescription, track_ids, time_period, imagePath = None):
+    imagePath = f"covers/{imagePath}.jpg" if imagePath is None else f"covers/{time_period}.jpg"
+
+    for playlist in playlists['items']:
+        if playlist['name'] == f'{playlistTitle}':
+            playlist_id = playlist['id']
+            # Update songs in existing playlist
+            SP.user_playlist_replace_tracks(USER_ID, playlist_id, track_ids)
+            SP.user_playlist_change_details(USER_ID, playlist_id, f'{playlistTitle}', description = playlistDescription)
+            print(f'{playlistTitle} Playlist Updated.\nhttps://open.spotify.com/playlist/{playlist_id}\n\n')
+            return playlist_id
+
+    playlist_id = SP.user_playlist_create(USER_ID, f'{playlistTitle}', public=PLAYLIST_TYPE, collaborative=False,description=playlistDescription)['id']
+    SP.user_playlist_add_tracks(USER_ID, playlist_id, track_ids)
+    with open(imagePath, 'rb') as image:
+        cover_encoded = base64.b64encode(image.read()).decode("utf-8")
+    SP.playlist_upload_cover_image(playlist_id, cover_encoded)
+    print(f'{playlistTitle} Playlist Created. \nhttps://open.spotify.com/playlist/{playlist_id}\n\n')
+    return playlist_id
+
 # Generates/Updates Recommended Playlist based on first 5 top tracks & artists
 def generate_recommended(time_period, playlist_id, playlists):
+    print('Generating Recommended Playlist (This may take a while)...')
     seed_tracks, seed_artists = [], []
-    user_id = sp.current_user()['id']
-    top_artists = sp.current_user_top_artists(
-        limit=6, offset=0, time_range=time_period)
-    for i in range(0, 5):
-        seed_tracks.append(sp.playlist_tracks(playlist_id)['items'][i]['track']['uri'])
-        try:    seed_artists.append(top_artists['items'][i]['uri'])
-        except IndexError: pass
+    top_artists = SP.current_user_top_artists(limit=6, offset=0, time_range=time_period)
+    seed_tracks = [track['track']['uri'] for track in SP.playlist_tracks(playlist_id, limit=5)['items']]
+    seed_artists = [artist['uri'] for artist in top_artists['items'][:5]]
 
-    recommendations = sp.recommendations(seed_tracks=seed_tracks, limit=25)
+    recommendations = SP.recommendations(seed_tracks=seed_tracks, limit=25)
     recommended_track_uris = [track['uri'] for track in recommendations['tracks']]
 
-    playlistExists = False
-    for playlist in playlists['items']:
-        if playlist['name'] == f'Recommended: Wrapped 365':
-            playlist_id = playlist['id']
-            if time_period == 'short_term':
-                sp.user_playlist_replace_tracks(
-                    user_id, playlist_id, recommended_track_uris)
-            else:
-                sp.user_playlist_add_tracks(user_id, playlist_id, recommended_track_uris)
-            sp.user_playlist_change_details(
-                user_id, playlist_id, description=f'Recommended playlist curated based on my top tracks. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. https://github.com/Prem-ium/Spotify-Wrapped-365')
-            with open(f"covers/rec.jpg", 'rb') as image:
-                cover_encoded = base64.b64encode(image.read()).decode("utf-8")
-                sp.playlist_upload_cover_image(playlist_id, cover_encoded)
-            playlistExists = True
-            break
+    title = f'{time_period} Recommended: Wrapped 365'
+    description = f'Recommended playlist curated based on my top tracks. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. Last Updated {datetime.datetime.now(TZ).strftime("%I:%M%p %m/%d")} https://github.com/Prem-ium/Spotify-Wrapped-365'
+    playlist_id = update_playlist(playlists, title, description, recommended_track_uris, time_period, imagePath = "recommend")
 
-    # Create playlist
-    if not playlistExists:
-        playlist_id = sp.user_playlist_create(user_id, f'Recommended: Wrapped 365', public=PLAYLIST_TYPE, collaborative=False,
-                                              description=f'Recommended playlist curated based on my top tracks. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. https://github.com/Prem-ium/Spotify-Wrapped-365')['id']
-        sp.user_playlist_add_tracks(
-            user_id, playlist_id, recommended_track_uris)
-        with open(f"covers/rec.jpg", 'rb') as image:
-            cover_encoded = base64.b64encode(image.read()).decode("utf-8")
-            sp.playlist_upload_cover_image(playlist_id, cover_encoded)
-
-    # Display Top 5 Recommended Artists based on Time Period
-    artist_recommendations = sp.recommendations(seed_artists=seed_artists, limit=5)
-    artist = f"Top 5 Recommended Artists for {time_period}\n"
+   # Display Top 5 Recommended Artists based on Time Period
+    artist_recommendations = SP.recommendations(seed_artists=seed_artists, limit=5)
+    artist = f"Top Recommended Artists for {time_period}\n"
 
     for i in range(0, 5):
-        artist += f"{i + 1}: {artist_recommendations['tracks'][i]['artists']['name']}\n"
-
-    try:    print(f'Recommended Playlist Created/Updated!\n{artist}')
-    except: pass
-
+        artist += f"{i + 1}: {artist_recommendations['tracks'][i]['artists'][0]['name']}\n"
+    
+    print(artist)
+    
     if APPRISE_ALERTS:
-        alerts.notify(
-            title=f'Top 5 Recommended Artists for {time_period}', body=artist)
-
-    return
-
+        alerts.notify(title=f'Top Recommended Artists for {time_period}', body=artist)
 
 def Wrapped():
-    print('\n------------------------------------------------------------------------------------------------------------------------------------------\n')
     if APPRISE_ALERTS:
-        alerts.notify(title=f'Wrapped365 Starting...',
-                      body='Top Artists and Tracks starting to update...')
+        alerts.notify(title=f'Spotify Wrapped 365 Starting!',body=f'{datetime.datetime.now(TZ).strftime("%I:%M%p %m/%d")}')
 
     time_ranges = ['short_term', 'medium_term', 'long_term']
-    for time_period in time_ranges:
-        print(
-            f'\n------------------------------------------Starting {time_period}------------------------------------------\n')
+    words = ["One Month", "Six Months", "Lifetime"]
+    for i in range(0, 3):
+        time_range = time_ranges[i]
+        time_period = words[i]
+        
+       # print(
+       #     f'\n------------------------------------------------------------------------------------' +
+       #                                     f'\n\t\t\t\t\t\t\tStarting {time_range}'+
+       #     f'\n------------------------------------------------------------------------------------\n')
+        print(f'\n{"-"*88}\n{f"Starting {time_range}".upper().center(88)}\n{"-"*88}\n')
 
-        # Reset PlayList Exist variable
-        playlistExists = False
-
-        # Get Top Tracks
-        top_tracks = sp.current_user_top_tracks(
-            limit=50, offset=0, time_range=time_period)
+        # Get Top Tracks & Track IDs
+        print(f'Getting {time_period} Top Tracks...')
+        top_tracks = SP.current_user_top_tracks(limit=50, offset=0, time_range=time_range)
         track_ids = get_track_ids(top_tracks)
+        print(f'{len(track_ids)} Top Tracks Found for {time_period}.\n\n')
 
         # Get Top Artists
-        top_artists = get_top_artists(time_period)
-        period = time_period.replace("_", " ")
+        print(f'Getting {time_period} Top Artists...')
+        top_artists = get_top_artists(time_range)
+        print(f'{len(top_artists)} Top Artists Found for {time_period}.\n\n')
+        
 
+        # Get Playlists
+        userPlaylists = SP.current_user_playlists()
+
+        # Generate, Create, or Update Top Tracks Playlist
+        print(f'Generating/Updating {time_period} Top Tracks Playlist...')
+        title = f'{time_period} - Top Tracks Wrapped'
+        description = f'{time_period} Top Played Tracks. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. Last Updated {datetime.datetime.now(TZ).strftime("%I:%M%p %m/%d")} https://github.com/Prem-ium/Spotify-Wrapped-365'
+        playlist_id = update_playlist(playlists = userPlaylists, playlistTitle=title, playlistDescription=description, track_ids=track_ids, time_period=time_range)
+
+        # Handle Google Sheets, if enabled
         if GOOGLE_SHEETS:
+            print(f'Inserting {time_period} Top Tracks & Artists into Google Sheets...\n\n')
             # Insert Top Tracks & Artists into Google Sheets
-            insert_to_gsheet(track_ids, top_artists, time_period)
+            insert_to_gsheet(track_ids, top_artists, time_range)
         else:
-            most_played_artists = f"------\nTop Artists for {period}:\n"
-            # Loop through top artists while having an index
-            for i, artist in enumerate(top_artists):
-                most_played_artists += f"{i + 1}: {artist[0]}\n"
-            most_played_artists += f"\n\n------"
-            print(most_played_artists)
+            # Print Top Artists for Time Period
+            most_played_artists = "\nTop Artists for {}:\n".format(time_period)
+            most_played_artists += "\n".join("{}: {}".format(i+1, artist[0]) for i, artist in enumerate(top_artists))
+
+            print(f'\n{most_played_artists}\n\n')
+
+            # Send an alert to the user of data, if enabled
             if APPRISE_ALERTS:
-                alerts.notify(
-                    title=f'Top Artists for {period}', body=most_played_artists)
+                alerts.notify(title=f'Top Artists for {time_period}', body=most_played_artists)
 
-        # get list of user's playlists & iterate over it to prevent duplication
-        playlists = sp.current_user_playlists()
-
-        for playlist in playlists['items']:
-            if playlist['name'] == f'{period} - Top Tracks Wrapped':
-                playlist_id = playlist['id']
-                # Update songs in existing playlist
-                sp.user_playlist_replace_tracks(
-                    USERNAME, playlist_id, track_ids)
-                sp.user_playlist_change_details(
-                    USERNAME, playlist_id, description=f'{period} Top Played Tracks. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. Last Updated {datetime.datetime.now(TZ).strftime("%I:%M%p %m/%d")} https://github.com/Prem-ium/Spotify-Wrapped-365')
-                playlistExists = True
-                print(f'\n{period} Top Tracks playlist updated.\n\n')
-                break
-
-        # Create playlist
-        if not playlistExists:
-            playlist_id = sp.user_playlist_create(USERNAME, f'{period} - Top Tracks Wrapped', public=PLAYLIST_TYPE, collaborative=False,
-                                                  description=f'{period} Top Played Tracks. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. Last Updated {datetime.datetime.now(TZ).strftime("%I:%M%p %m/%d")} https://github.com/Prem-ium/Spotify-Wrapped-365')['id']
-            sp.user_playlist_add_tracks(USERNAME, playlist_id, track_ids)
-            with open(f"covers/{time_period}.jpg", 'rb') as image:
-                cover_encoded = base64.b64encode(image.read()).decode("utf-8")
-            sp.playlist_upload_cover_image(playlist_id, cover_encoded)
-            print(f'\n{period} Top Tracks playlist created.\n\n')
-    try:
         if RECCOMENDATIONS:
-            generate_recommended(time_period, playlist_id,
-                                 playlists=sp.current_user_playlists())
-    except Exception as e:  
-        print(f'\nException:\n{e}\n\n{traceback.format_exc()}\n\n')
-        pass
-
-        print(f'------------------------------------------------------------------------------------------------------------------------------------------\n')
+            try:    generate_recommended(time_range, playlist_id, playlists=userPlaylists)
+            except: print(traceback.format_exc())
+        print(f'\n{"-"*88}\n{f"Finished {time_range}".upper().center(88)}\n{"-"*88}\n\n')
 
     if APPRISE_ALERTS:
         alerts.notify(title=f'Wrapped365 Finished!',
@@ -282,13 +260,13 @@ def Wrapped():
 
 
 def main():
+    info = f'\nGenerated Spotify Wrapped 365 Playlists!\nThanks for using Prem-ium\'s Wrapped 365 project!\nPlease leave a star if you found this project cool!\nhttps://github.com/Prem-ium/Spotify-Wrapped-365\n\nSleeping for {WAIT / 3600} hours until updating your stats...\n'
     while True:
         try:
             Wrapped()
-            print(
-                f'\nAll done!\nThanks for using Prem-ium\'s Wrapped 365 project, please share it with your friends!\nSleeping for {WAIT / 3600} hours until updating your stats...\n')
+            print(f'\n{"-"*88}\n{f"{info}".center(88)}\n{"-"*88}\n')
             time.sleep(WAIT)
-            
+
         except Exception as e:
             print(f'\Exception:\n{e}\n\n{traceback.format_exc()}\n\n')
             if APPRISE_ALERTS:
@@ -301,9 +279,4 @@ def main():
 if __name__ == '__main__':
     if APPRISE_ALERTS:
         alerts = apprise_init()
-
-    # Initialize Spotify
-    sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
-                                                   redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
-    
     main()
