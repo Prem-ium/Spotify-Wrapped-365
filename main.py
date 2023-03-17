@@ -252,7 +252,7 @@ def Wrapped():
                 sp.user_playlist_replace_tracks(
                     USERNAME, playlist_id, track_ids)
                 sp.user_playlist_change_details(
-                    USERNAME, playlist_id, description=f'{period} Top Played Tracks. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. Last Updated {datetime.datetime.now(TZ).strftime("%H:%M %m/%d")} https://github.com/Prem-ium/Spotify-Wrapped-365')
+                    USERNAME, playlist_id, description=f'{period} Top Played Tracks. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. Last Updated {datetime.datetime.now(TZ).strftime("%I:%M%p %m/%d")} https://github.com/Prem-ium/Spotify-Wrapped-365')
                 playlistExists = True
                 print(f'\n{period} Top Tracks playlist updated.\n\n')
                 break
@@ -260,7 +260,7 @@ def Wrapped():
         # Create playlist
         if not playlistExists:
             playlist_id = sp.user_playlist_create(USERNAME, f'{period} - Top Tracks Wrapped', public=PLAYLIST_TYPE, collaborative=False,
-                                                  description=f'{period} Top Played Tracks. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. Last Updated {datetime.datetime.now(TZ).strftime("%H:%M %m/%d")} https://github.com/Prem-ium/Spotify-Wrapped-365')['id']
+                                                  description=f'{period} Top Played Tracks. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. Last Updated {datetime.datetime.now(TZ).strftime("%I:%M%p %m/%d")} https://github.com/Prem-ium/Spotify-Wrapped-365')['id']
             sp.user_playlist_add_tracks(USERNAME, playlist_id, track_ids)
             with open(f"covers/{time_period}.jpg", 'rb') as image:
                 cover_encoded = base64.b64encode(image.read()).decode("utf-8")
