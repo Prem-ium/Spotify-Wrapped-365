@@ -150,7 +150,7 @@ def insert_to_gsheet(track_ids, artist_info, time_period):
     return tracks
 
 def update_playlist(playlists, playlistTitle, playlistDescription, track_ids, time_period, imagePath = None):
-    imagePath = f"covers/{imagePath}.jpg" if imagePath is None else f"covers/{time_period}.jpg"
+    imagePath = f"covers/{imagePath}.jpg"
 
     for playlist in playlists['items']:
         if playlist['name'] == f'{playlistTitle}':
@@ -158,7 +158,12 @@ def update_playlist(playlists, playlistTitle, playlistDescription, track_ids, ti
             # Update songs in existing playlist
             SP.user_playlist_replace_tracks(USER_ID, playlist_id, track_ids)
             SP.user_playlist_change_details(USER_ID, playlist_id, f'{playlistTitle}', description = playlistDescription)
+
+            with open(imagePath, 'rb') as image:
+                cover_encoded = base64.b64encode(image.read()).decode("utf-8")
+            SP.playlist_upload_cover_image(playlist_id, cover_encoded)
             print(f'{playlistTitle} Playlist Updated.\nhttps://open.spotify.com/playlist/{playlist_id}\n\n')
+            
             return playlist_id
 
     playlist_id = SP.user_playlist_create(USER_ID, f'{playlistTitle}', public=PLAYLIST_TYPE, collaborative=False,description=playlistDescription)['id']
@@ -182,16 +187,18 @@ def generate_recommended(time_period, playlist_id, playlists):
 
     title = f'{time_period} Recommended: Wrapped 365'
     description = f'Recommended playlist curated based on my top tracks. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. Last Updated {datetime.datetime.now(TZ).strftime("%I:%M%p %m/%d")} https://github.com/Prem-ium/Spotify-Wrapped-365'
-    playlist_id = update_playlist(playlists, title, description, recommended_track_uris, time_period, imagePath = "recommend")
+    playlist_id = update_playlist(playlists, title, description, recommended_track_uris, time_period, imagePath = f'recommend_{time_period}')
 
    # Display Top 5 Recommended Artists based on Time Period
     artist_recommendations = SP.recommendations(seed_artists=seed_artists, limit=5)
     artist = f"Top Recommended Artists for {time_period}\n"
-
-    for i in range(0, 5):
-        artist += f"{i + 1}: {artist_recommendations['tracks'][i]['artists'][0]['name']}\n"
-    
     print(artist)
+    for i in range(0, 5):
+        try:
+            print(f"{i + 1}: {artist_recommendations['tracks'][i]['artists'][0]['name']}")
+            artist += f"{i + 1}: {artist_recommendations['tracks'][i]['artists'][0]['name']}\n"
+        except:
+            pass
     
     if APPRISE_ALERTS:
         alerts.notify(title=f'Top Recommended Artists for {time_period}', body=artist)
@@ -230,8 +237,8 @@ def Wrapped():
         # Generate, Create, or Update Top Tracks Playlist
         print(f'Generating/Updating {time_period} Top Tracks Playlist...')
         title = f'{time_period} - Top Tracks Wrapped'
-        description = f'{time_period} Top Played Tracks. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. Last Updated {datetime.datetime.now(TZ).strftime("%I:%M%p %m/%d")} https://github.com/Prem-ium/Spotify-Wrapped-365'
-        playlist_id = update_playlist(playlists = userPlaylists, playlistTitle=title, playlistDescription=description, track_ids=track_ids, time_period=time_range)
+        description = f'My Top Played Tracks for {time_period}. Last Updated {datetime.datetime.now(TZ).strftime("%I:%M%p %Mm/%d")}. Updated every {WAIT/3600} hours. Generated using Prem-ium\'s GitHub: https://github.com/Prem-ium/Spotify-Wrapped-365'
+        playlist_id = update_playlist(playlists = userPlaylists, playlistTitle=title, playlistDescription=description, track_ids=track_ids, time_period=time_range, imagePath = time_range)
 
         # Handle Google Sheets, if enabled
         if GOOGLE_SHEETS:
