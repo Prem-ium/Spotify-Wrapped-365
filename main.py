@@ -237,7 +237,7 @@ def Wrapped():
         # Generate, Create, or Update Top Tracks Playlist
         print(f'Generating/Updating {time_period} Top Tracks Playlist...')
         title = f'{time_period} - Top Tracks Wrapped'
-        description = f'My Top Played Tracks for {time_period}. Last Updated {datetime.datetime.now(TZ).strftime("%I:%M%p %Mm/%d")}. Updated every {WAIT/3600} hours. Generated using Prem-ium\'s GitHub: https://github.com/Prem-ium/Spotify-Wrapped-365'
+        description = f'My Top Played Tracks for {time_period}. Last Updated {datetime.datetime.now(TZ).strftime("%I:%M%p %m/%d")}. Updated every {WAIT/3600} hours. Generated using Prem-ium\'s GitHub: https://github.com/Prem-ium/Spotify-Wrapped-365'
         playlist_id = update_playlist(playlists = userPlaylists, playlistTitle=title, playlistDescription=description, track_ids=track_ids, time_period=time_range, imagePath = time_range)
 
         # Handle Google Sheets, if enabled
