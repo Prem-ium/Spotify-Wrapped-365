@@ -1,6 +1,8 @@
-# Spotify Wrapped 365 🎶
+<p align="right"><img src="https://img.shields.io/badge/Spotify-1ED760?style=for-the-badge&logo=spotify&logoColor=white"/>
+<h1 align="center"> 🎧 Spotify Wrapped 365 🎶 </h1>
 
-Generate a playlist composed of your top played tracks on Spotify over the course of a month, 6 months, and the all-time Top Tracks of your account! 
+<p align="center">Generate your Spotify <i>Top Tracks</i> in a Playlist, <i>Top Played Artists, & More</i>!</p>
+
 ![image](https://user-images.githubusercontent.com/80719066/202199720-a1203f3a-7d8b-441c-bc91-911490a073ab.png)
 
 ## Features
