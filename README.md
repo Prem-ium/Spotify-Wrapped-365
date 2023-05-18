@@ -1,4 +1,4 @@
-<p align="right"><img src="https://img.shields.io/badge/Spotify-1ED760?style=for-the-badge&logo=spotify&logoColor=white"/>
+<p align="right"><a href="https://developer.spotify.com/dashboard"><img src="https://img.shields.io/badge/Spotify-1ED760?style=for-the-badge&logo=spotify&logoColor=white"/></a></p>
 <h1 align="center"> 🎧 Spotify Wrapped 365 🎶 </h1>
 
 <p align="center">Generate your Spotify <i>Top Tracks</i> in a Playlist, <i>Top Played Artists, & More</i>!</p>
