@@ -17,28 +17,24 @@
 ## Environment Variables
 To run this project, you will need to add the following environment variables to your .env file (see .env.example for a reference):
 ##### Required .env:
-`CLIENT_ID`: [Found on Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)
-
-`SECRET_CLIENT_ID`: [Found on Spotify Developer Dashboard](https://developer.spotify.com/dashboard/)
-
-`REDIRECT_URL`: The Redirect URL you added when creating the App on Spotify's Developer Dashboard. Check .env.example for reference.
-
-`USERNAME`: Your Spotify account username [can be found in Spotify account settings.](https://www.spotify.com/us/account/overview/?utm_source=spotify&utm_medium=menu&utm_campaign=your_account))
+| Environment Variable   | Description                                                                                                            | Default Value |
+|------------------------|------------------------------------------------------------------------------------------------------------------------|---------------|
+| `CLIENT_ID`            | Found on Spotify Developer Dashboard. [More Info](https://developer.spotify.com/dashboard/)                           | -             |
+| `SECRET_CLIENT_ID`     | Found on Spotify Developer Dashboard. [More Info](https://developer.spotify.com/dashboard/)                           | -             |
+| `REDIRECT_URL`         | The Redirect URL you added when creating the App on Spotify's Developer Dashboard. Check .env.example for reference. | -             |
+| `USERNAME`             | Your Spotify account username (can be found in Spotify account settings.)                                             | -             |
 
 ##### Optional .env:
-`MINUTES`: Number of minutes the program should wait before updating Top Tracks playlist. Defaults to 360 minutes (or 6 hours).
+| Environment Variable   | Description                                                                                                            | Default Value                      |
+|------------------------|------------------------------------------------------------------------------------------------------------------------|------------------------------------|
+| `MINUTES`              | Number of minutes the program should wait before updating Top Tracks playlist.                                       | 360 minutes (or 6 hours)           |
+| `PUBLIC_PLAYLIST`      | Boolean value indicating whether to create a public playlist.                                                         | True                               |
+| `RECOMMENDATIONS`      | Boolean value indicating whether to generate recommendations (tracks playlist and artists recommendations).          | False                              |
+| `KEEP_ALIVE`           | Whether to run the flask server or not to keep the program from sleeping on replit.                                  | False                              |
+| `APPRISE_ALERTS`       | Full list of services and their URLs available here: [Apprise Wiki](https://github.com/caronc/apprise/wiki)          | -                                  |
+| `TZ`                   | Your desired Time-Zone. Should be formatted from the IANA TZ Database.                                               | `America/New York`                 |
+| `GSPREAD_KEYS`         | Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API.       | -                                  |
 
-`PUBLIC_PLAYLIST`: Boolean value indicating whether to create a public playlist. Defaults to True.
-
-`RECOMMENDATIONS`: Boolean value indicating whether to generate recommendations (tracks playlist and artists recommendations). Defaults to False.
-
-`KEEP_ALIVE`: Whether to run the flask server or not to keep program from sleeping on replit. Defaults to False.
-
-`APPRISE_ALERTS`:  Full list of services and their URLs available here: [found here on Apprise wiki](https://github.com/caronc/apprise/wiki).
-
-`TZ`: Your desired Time-Zone. Should be formatted from the [IANA TZ Database](https://www.iana.org/time-zones). Defaults to `America/New York`
-
-`GSPREAD_KEYS`: Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API.
 
 
 ## Setup
