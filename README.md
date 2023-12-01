@@ -67,7 +67,7 @@ This script can be used locally or using Docker.
 Clone the repository & Install dependencies
 ```bash
   git clone https://github.com/Prem-ium/Spotify-Wrapped-365.git
-  cd Spotify-Wrapped365
+  cd Spotify-Wrapped-365
   pip install -r requirements.txt
 ```
 Finally, you're ready to run the script!
