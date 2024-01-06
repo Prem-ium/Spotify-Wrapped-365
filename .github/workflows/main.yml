@@ -1,0 +1,36 @@
+name: Scheduled Spotify Wrapped 365 Job
+
+on:
+  schedule:
+    - cron: '0 */2 * * *' # Run every 2 hours
+  push:
+    branches:
+      - main  # Adjust the branch name as needed
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    env:
+      CLIENT_ID: ${{ secrets.CLIENT_ID }}
+      SECRET_CLIENT_ID: ${{ secrets.SECRET_CLIENT_ID }}
+      REDIRECT_URL: ${{ secrets.REDIRECT_URL }}
+      USERNAME: ${{ secrets.USERNAME }}
+      GITHUB_ACTIONS: ${{ secrets.GITHUB_ACTIONS }}
+      AUTH_CACHE: ${{ secrets.AUTH_CACHE }}
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.x
+
+    - name: Install dependencies
+      run: |
+        pip install -r requirements.txt
+
+    - name: Run main.py
+      run: python main.py

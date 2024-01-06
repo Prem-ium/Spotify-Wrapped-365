@@ -10,7 +10,8 @@
 - Generate List of Top Played Artists
 - Optional Apprise Alerts/Notifications upon Program Execution/Playlist Update
 - Google Sheets Compatiable. 
-- Keep_Alive Flask Server & [Replit](https://replit.com/) compatiable (Run Program 24/7, no computer required)
+- GitHub Actions
+- Keep_Alive Flask Server
 - Docker Support (In Addition to Docker Quickstart Bat File)
 - Optional Recommended Tracks & Artists (Seperate Playlist)
 
@@ -33,6 +34,8 @@ To run this project, you will need to add the following environment variables to
 | `KEEP_ALIVE`           | Whether to run the flask server or not to keep the program from sleeping on replit.                                  | False                              |
 | `APPRISE_ALERTS`       | Full list of services and their URLs available here: [Apprise Wiki](https://github.com/caronc/apprise/wiki)          | -                                  |
 | `TZ`                   | Your desired Time-Zone. Should be formatted from the IANA TZ Database.                                               | `America/New York`                 |
+| `GITHUB_ACTIONS`         | Boolean value indicating whether you're running or setting up to use GitHub Actions.       | -                                  |
+| `AUTH_CACHE`         | Cache JSON String retrieved from initial setup, for GitHub Actions.      | -                                  |
 | `GSPREAD_KEYS`         | Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API.       | -                                  |
 
 
@@ -47,7 +50,8 @@ To run this project, you will need to add the following environment variables to
 5. Copy/paste Client ID into `CLIENT_ID` and Secret Client ID into `SECRET_CLIENT_ID` within your .env file.
 <img src="https://user-images.githubusercontent.com/80719066/202246004-f7307806-69ec-4489-975b-beb71e6637b3.png" style="width: 50%;"></img>
 
-#### Replit (Optional, Recommended)
+#### Replit (~~Optional, Recommended~~, Depreciated)
+Note: In January 2024, Replit has discontinued support for Always On & Free Hosting.
 1. Login/Create a [Replit](https://replit.com/) account and create a new Python repl.
 2. Setup .env within Replit's Secret tab (set `KEEP_ALIVE` to True) & go through [Installation](#installation). Optionally, move all files out of folder for ease of navigation, replace empty/old main.py.
 3. Run the program and copy URL in the Flask webview. It should be something similar to:
@@ -67,7 +71,7 @@ This script can be used locally or using Docker.
 Clone the repository & Install dependencies
 ```bash
   git clone https://github.com/Prem-ium/Spotify-Wrapped-365.git
-  cd Spotify-Wrapped365
+  cd Spotify-Wrapped-365
   pip install -r requirements.txt
 ```
 Finally, you're ready to run the script!
@@ -128,6 +132,6 @@ Thank you for your support!
 ## Final Remarks
 How to Get Spotify Wrapped. 365 days a year. While everyone else google searches 'how to see / check / find spotify wrapped' you'll have access to your top played tracks and artists all year long! 
 
-As previously mentioned however, I strongly recommend utilizing this repository using a service such as [Replit](https://replit.com/) & [UpTimeRobot](https://uptimerobot.com/) as they will allow you the program to run without any computer resource cost to you. 
+~~As previously mentioned however, I strongly recommend utilizing this repository using a service such as [Replit](https://replit.com/) & [UpTimeRobot](https://uptimerobot.com/) as they will allow you the program to run without any computer resource cost to you. ~~
 
 Beyond that, thank you for your interest in this repository. Please leave a 🌟 & share with your friends!
