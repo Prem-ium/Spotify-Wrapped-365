@@ -41,8 +41,7 @@ load_dotenv()
 
 # Spotify Credentials
 if not os.environ["CLIENT_ID"] or not os.environ["SECRET_CLIENT_ID"] or not os.environ["REDIRECT_URL"] or not os.environ["USERNAME"]:
-    raise Exception(
-        "Variables are missing within the .env file. Please ensure you have CLIENT_ID, SECRET_CLIENT_ID, REDIRECT_URL, and USERNAME set.")
+    raise Exception("Variables are missing within the .env file. Please ensure you have CLIENT_ID, SECRET_CLIENT_ID, REDIRECT_URL, and USERNAME set.")
 else:
     # Update with your own Spotify Credentials (Client ID, Secret Client ID, redirect, and username)
     SPOTIPY_CLIENT = os.environ['CLIENT_ID']
@@ -51,11 +50,25 @@ else:
     SCOPE = "user-top-read playlist-modify-private playlist-modify-public user-library-modify user-library-read playlist-read-private ugc-image-upload"
     USERNAME = os.environ['USERNAME']
 
-    # Initialize Spotify
-    SP = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
+    # Get Spotify OAuth token without user input
+    sp_oauth = SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
+                            redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False)
+    if (os.environ.get("GITHUB_ACTIONS", "false").lower() == "true"):
+        GITHUB_ACTIONS = True
+        if os.environ.get('AUTH_CACHE', None) is not None:
+            token_info = json.loads(os.environ['AUTH_CACHE'])
+            SP = spotipy.Spotify(auth=token_info['access_token'])
+        else:
+            # Aware of the fact that this is not the best way to do this, but it works for now
+            token_info = sp_oauth.get_access_token()
+            print(f'Assign the following to the AUTH_CACHE secrets variable, within GitHub Actions Secrets page:\n{token_info}\n\n')
+            SP = spotipy.Spotify(auth=token_info['access_token'])
+    else:
+        GITHUB_ACTIONS = False
+        SP = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
                                                    redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
     USER_ID = SP.current_user()['id']
-
+    
 # Whether to use keep_alive.py
 if (os.environ.get("KEEP_ALIVE", "false").lower() == "true"):
     from keep_alive                     import keep_alive
@@ -272,17 +285,13 @@ def main():
         try:
             Wrapped()
             print(f'\n{"-"*88}\n{f"{info}".center(88)}\n{"-"*88}\n')
-            time.sleep(WAIT)
-
+            if not GITHUB_ACTIONS:   time.sleep(WAIT)
+            else:                    break
         except Exception as e:
             print(f'\Exception:\n{e}\n\n{traceback.format_exc()}\n\n')
-            if APPRISE_ALERTS:
-                alerts.notify(title=f'Wrapped365 Exception.',
-                              body=f'{e}\nAttempting to restart in 15 minutes...')
+            if APPRISE_ALERTS:  alerts.notify(title=f'Wrapped365 Exception.', body=f'{e}\nAttempting to restart in 15 minutes...')
             time.sleep(900)
-            continue
-
-
+    
 if __name__ == '__main__':
     if APPRISE_ALERTS:
         alerts = apprise_init()
