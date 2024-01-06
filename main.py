@@ -288,7 +288,7 @@ def main():
             if not GITHUB_ACTIONS:   time.sleep(WAIT)
             else:                    break
         except Exception as e:
-            print(f'\Exception:\n{e}\n\n{traceback.format_exc()}\n\n')
+            print(f'Exception:\n {e} \n {traceback.format_exc()} \n\n')
             if APPRISE_ALERTS:  alerts.notify(title=f'Wrapped365 Exception.', body=f'{e}\nAttempting to restart in 15 minutes...')
             time.sleep(900)
     
