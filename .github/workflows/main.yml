@@ -2,7 +2,7 @@ name: Scheduled Spotify Wrapped 365 Job
 
 on:
   schedule:
-    - cron: '0 */1 * * *'
+    - cron: '30 */0 * * *'
   push:
     branches:
       - main
