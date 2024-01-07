@@ -8,12 +8,11 @@
 ## Features
 - Generate Top Tracks Playlist that auto-updates!
 - Generate List of Top Played Artists
-- Generate Reccomended Tracks Playlists (Optional)
-- Optional Apprise Alerts/Notifications
-- GitHub Actions Support
-- Docker Support
+- Optional Apprise Alerts/Notifications upon Program Execution/Playlist Update
 - Google Sheets Compatiable. 
-- Keep_Alive Flask Server
+- Keep_Alive Flask Server & [Replit](https://replit.com/) compatiable (Run Program 24/7, no computer required)
+- Docker Support (In Addition to Docker Quickstart Bat File)
+- Optional Recommended Tracks & Artists (Seperate Playlist)
 
 ## Environment Variables
 To run this project, you will need to add the following environment variables to your .env file (see .env.example for a reference):
@@ -34,9 +33,8 @@ To run this project, you will need to add the following environment variables to
 | `KEEP_ALIVE`           | Whether to run the flask server or not to keep the program from sleeping on replit.                                  | False                              |
 | `APPRISE_ALERTS`       | Full list of services and their URLs available here: [Apprise Wiki](https://github.com/caronc/apprise/wiki)          | -                                  |
 | `TZ`                   | Your desired Time-Zone. Should be formatted from the IANA TZ Database.                                               | `America/New York`                 |
-| `GITHUB_ACTIONS`         | Boolean value indicating whether you're running or setting up to use GitHub Actions.       | -                                  |
-| `AUTH_CACHE`         | Cache JSON String retrieved from initial setup, for GitHub Actions.      | -                                  |
 | `GSPREAD_KEYS`         | Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API.       | -                                  |
+
 
 
 ## Setup
@@ -49,15 +47,15 @@ To run this project, you will need to add the following environment variables to
 5. Copy/paste Client ID into `CLIENT_ID` and Secret Client ID into `SECRET_CLIENT_ID` within your .env file.
 <img src="https://user-images.githubusercontent.com/80719066/202246004-f7307806-69ec-4489-975b-beb71e6637b3.png" style="width: 50%;"></img>
 
-### GitHub Actions
-1. Fork the repository and start configuring your `.env` by navigating to your Forked Repository Settings: `Settings -> Security -> Secrets & Variables -> Actions -> New Repository Secret`.
-3. Enable `GITHUB_ACTIONS` by assigning the value of `True` within your `.env`.
-4. Run `main.py`, click the URL in the console, and approve the ticket for your account.
-5. Copy the URL after approving permissions, paste it into the console, and hit enter.
-6. Copy the cache JSON contents and assign it to the `AUTH_CACHE` variable within GitHub Secrets.
-7. Adjust the cron job if necessary.
+#### Replit (Optional, Recommended)
+1. Login/Create a [Replit](https://replit.com/) account and create a new Python repl.
+2. Setup .env within Replit's Secret tab (set `KEEP_ALIVE` to True) & go through [Installation](#installation). Optionally, move all files out of folder for ease of navigation, replace empty/old main.py.
+3. Run the program and copy URL in the Flask webview. It should be something similar to:
+`https://{Name of Repl}.{Repl username}.repl.co/` 
+4. Create an account on [Uptime Robot](https://uptimerobot.com/), Click 'Add New Monitor',HTTP monitor type, name the monitor anything you'd like, paste your copied link into URL, set interval to 5 minutes, timeout to 30 seconds, and create the monitor.
+5. Rerun the repl program. The repl should stay on 24/7! Your playlist will continue to be updated at no computer resource cost to you!
 
-### Google Sheets/GSpread (Optional)
+#### Google Sheets/GSpread (Optional)
 1. Sign into [Google Cloud Console](https://console.cloud.google.com/), create your APP,Enable Google Sheets and Google Drive APIs.
 3. Head to API & Services -> Credentials ->  Create Credentials -> Service Account. Go through the prompts & download the JSON file afterwards.
 5. Open Google Sheets and create a new file named 'Wrapped365'. Add tabs named 'short_term', 'medium_term', 'long_term', 'short_term Artists', 'medium_term Artists', and 'long_term Artists'
@@ -69,7 +67,7 @@ This script can be used locally or using Docker.
 Clone the repository & Install dependencies
 ```bash
   git clone https://github.com/Prem-ium/Spotify-Wrapped-365.git
-  cd Spotify-Wrapped-365
+  cd Spotify-Wrapped365
   pip install -r requirements.txt
 ```
 Finally, you're ready to run the script!
@@ -90,10 +88,14 @@ Finally, you're ready to run the script!
    docker run -it --env-file ./.env --restart unless-stopped --name spotify-wrapped spotify-wrapped
    ```
 
+
 5. Let the bot log in and begin working. DO NOT PRESS `CTRL-c`. This will kill the container and the bot. To exit the logs view, press `CTRL-p` then `CTRL-q`. This will exit the logs view but let the bot keep running.
 
+
 ## License
+
 This repository is using the [MIT](https://choosealicense.com/licenses/mit/) license.
+
 
 ## 🎧 What I've been listening to
 
@@ -101,15 +103,31 @@ This repository is using the [MIT](https://choosealicense.com/licenses/mit/) lic
 
 ## Donations
 I've been working on this project for a few months now, and I'm really happy with how it's turned out. It's also been a helpful tool for users to earn some extra money with Bing Rewards. I'm currently working on adding new features to the script and working on other similar programs to generate passive income. I'm also working on making the script more user-friendly and accessible to a wider audience.
-If you appreciate my work and would like to show your support, there are two convenient ways to make a donation:
 
-1. **GitHub Sponsors**
-   - [Donate via GitHub Sponsors](https://github.com/sponsors/Prem-ium)
-   - This is the preferred donation method as you can place donations with no transaction fees & possibily receive perks for your donation.
-   - [![GitHub Sponsor](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/Prem-ium)
+I'm accepting donations through BuyMeCoffee or GitHub Sponsors. Any amount you can donate will be greatly appreciated.
 
-2. **Buy Me A Coffee**
-   - [Donate via Buy Me A Coffee](https://www.buymeacoffee.com/prem.ium)
-   - [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/prem.ium)
+<div style="display: grid; grid-template-columns: 1fr 1fr; justify-content: center; gap: 10px;">
+    <div style="display: grid; justify-content: center;">
+        <span>Buy Me a Coffee:</span>
+        <a href="https://www.buymeacoffee.com/prem.ium" target="_blank">
+            <img src="https://raw.githubusercontent.com/Prem-ium/youtube-analytics-bot/main/output-examples/media/coffee-logo.png" alt="Buy Me A Coffee" style="height: 41px !important; width: 174px !important; box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important; -webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;">
+        </a>
+    </div>
+    <div style="display: grid; justify-content: center;">
+        <span>GitHub Sponsors:</span>
+        <a href="https://github.com/sponsors/Prem-ium" target="_blank">
+            <img src="https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA" alt="GitHub Sponsor" style="height: 41px !important; width: 174px !important; box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important; -webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;">
+        </a>
+    </div>
+</div>
 
-Your generous donations will go a long way in helping me cover the expenses associated with developing new features and promoting the project to a wider audience. I extend my heartfelt gratitude to all those who have already contributed. Thank you for your support!
+Your donations will help me to cover the costs of hosting the project, developing new features, and marketing the project to a wider audience.
+Thank you for your support!
+
+
+## Final Remarks
+How to Get Spotify Wrapped. 365 days a year. While everyone else google searches 'how to see / check / find spotify wrapped' you'll have access to your top played tracks and artists all year long! 
+
+As previously mentioned however, I strongly recommend utilizing this repository using a service such as [Replit](https://replit.com/) & [UpTimeRobot](https://uptimerobot.com/) as they will allow you the program to run without any computer resource cost to you. 
+
+Beyond that, thank you for your interest in this repository. Please leave a 🌟 & share with your friends!
