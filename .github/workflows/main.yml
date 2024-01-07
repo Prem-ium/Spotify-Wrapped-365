@@ -2,7 +2,7 @@ name: Scheduled Spotify Wrapped 365 Job
 
 on:
   schedule:
-     - cron: '*/${{ secrets.MINUTES }} * * * *' # Run every specified number of minutes
+    - cron: '0 */2 * * *' # Run every 4 hours
   push:
     branches:
       - main  # Adjust the branch name as needed
