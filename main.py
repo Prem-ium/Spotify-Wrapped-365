@@ -53,26 +53,34 @@ else:
     # Get Spotify OAuth token without user input
     sp_oauth = SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
                             redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False)
-    if (os.environ.get("GITHUB_ACTIONS", "false").lower() == "true"):
-        GITHUB_ACTIONS = True
-        if os.environ.get('AUTH_CACHE', None) is not None:
-            token_info = json.loads(os.environ['AUTH_CACHE'])
-            SP = spotipy.Spotify(auth=token_info['access_token'])
-        else:
-            # Aware of the fact that this is not the best way to do this, but it works for now
-            token_info = sp_oauth.get_access_token()
-            print(f'Assign the following to the AUTH_CACHE secrets variable, within GitHub Actions Secrets page:\n{token_info}\n\n')
-            SP = spotipy.Spotify(auth=token_info['access_token'])
+    
+    # GitHub Actions attempt
+    # ISSUE: Access token is able to be refreshed, but cannot be updated to GitHub Secrets for next run 
+    if os.environ.get('AUTH_CACHE', None) is not None:
+        token_info = json.loads(os.environ['AUTH_CACHE'])
+        print(token_info)
+        token_info = sp_oauth.refresh_access_token(token_info['refresh_token'])
+        print(f'\n\n')
+        print(token_info)
+        SP = spotipy.Spotify(auth=token_info['access_token'])
+   # else:
+   #     token_info = sp_oauth.get_access_token()
+   #     print(f'Assign the following to the AUTH_CACHE secrets variable, within GitHub Actions Secrets page:\n{token_info}\n\n')
+   #     SP = spotipy.Spotify(auth=token_info['access_token'])
+    
     else:
-        GITHUB_ACTIONS = False
+        # Initialize Spotify, the normal way
         SP = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
-                                                   redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
+                                                    redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
+    
     USER_ID = SP.current_user()['id']
     
 # Whether to use keep_alive.py
 if (os.environ.get("KEEP_ALIVE", "false").lower() == "true"):
     from keep_alive                     import keep_alive
     keep_alive()
+
+GITHUB_ACTIONS = True if os.environ.get("GITHUB_ACTIONS", "false").lower() == "true" else False
 
 PLAYLIST_TYPE = True if os.environ.get(
     "PUBLIC_PLAYLIST", "true").lower() == "true" else False

@@ -10,10 +10,12 @@
 - Generate List of Top Played Artists
 - Generate Reccomended Tracks Playlists (Optional)
 - Optional Apprise Alerts/Notifications
-- GitHub Actions Support
 - Docker Support
 - Google Sheets Compatiable. 
 - Keep_Alive Flask Server
+
+### Issues
+- GitHub Actions Support (Currently Not Working-> ISSUE: Spotipy Access token is able to be refreshed, but cannot be updated to GitHub Secrets for next run)
 
 ## Environment Variables
 To run this project, you will need to add the following environment variables to your .env file (see .env.example for a reference):
@@ -34,7 +36,6 @@ To run this project, you will need to add the following environment variables to
 | `KEEP_ALIVE`           | Whether to run the flask server or not to keep the program from sleeping on replit.                                  | False                              |
 | `APPRISE_ALERTS`       | Full list of services and their URLs available here: [Apprise Wiki](https://github.com/caronc/apprise/wiki)          | -                                  |
 | `TZ`                   | Your desired Time-Zone. Should be formatted from the IANA TZ Database.                                               | `America/New York`                 |
-| `GITHUB_ACTIONS`         | Boolean value indicating whether you're running or setting up to use GitHub Actions.       | -                                  |
 | `AUTH_CACHE`         | Cache JSON String retrieved from initial setup, for GitHub Actions.      | -                                  |
 | `GSPREAD_KEYS`         | Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API.       | -                                  |
 
