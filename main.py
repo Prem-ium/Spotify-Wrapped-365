@@ -41,7 +41,8 @@ load_dotenv()
 
 # Spotify Credentials
 if not os.environ["CLIENT_ID"] or not os.environ["SECRET_CLIENT_ID"] or not os.environ["REDIRECT_URL"] or not os.environ["USERNAME"]:
-    raise Exception("Variables are missing within the .env file. Please ensure you have CLIENT_ID, SECRET_CLIENT_ID, REDIRECT_URL, and USERNAME set.")
+    raise Exception(
+        "Variables are missing within the .env file. Please ensure you have CLIENT_ID, SECRET_CLIENT_ID, REDIRECT_URL, and USERNAME set.")
 else:
     # Update with your own Spotify Credentials (Client ID, Secret Client ID, redirect, and username)
     SPOTIPY_CLIENT = os.environ['CLIENT_ID']
@@ -74,7 +75,7 @@ else:
                                                     redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
     
     USER_ID = SP.current_user()['id']
-    
+
 # Whether to use keep_alive.py
 if (os.environ.get("KEEP_ALIVE", "false").lower() == "true"):
     from keep_alive                     import keep_alive
@@ -293,13 +294,17 @@ def main():
         try:
             Wrapped()
             print(f'\n{"-"*88}\n{f"{info}".center(88)}\n{"-"*88}\n')
-            if not GITHUB_ACTIONS:   time.sleep(WAIT)
-            else:                    break
+            time.sleep(WAIT)
+
         except Exception as e:
-            print(f'Exception:\n {e} \n {traceback.format_exc()} \n\n')
-            if APPRISE_ALERTS:  alerts.notify(title=f'Wrapped365 Exception.', body=f'{e}\nAttempting to restart in 15 minutes...')
+            print(f'\Exception:\n{e}\n\n{traceback.format_exc()}\n\n')
+            if APPRISE_ALERTS:
+                alerts.notify(title=f'Wrapped365 Exception.',
+                              body=f'{e}\nAttempting to restart in 15 minutes...')
             time.sleep(900)
-    
+            continue
+
+
 if __name__ == '__main__':
     if APPRISE_ALERTS:
         alerts = apprise_init()
