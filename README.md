@@ -47,14 +47,6 @@ To run this project, you will need to add the following environment variables to
 5. Copy/paste Client ID into `CLIENT_ID` and Secret Client ID into `SECRET_CLIENT_ID` within your .env file.
 <img src="https://user-images.githubusercontent.com/80719066/202246004-f7307806-69ec-4489-975b-beb71e6637b3.png" style="width: 50%;"></img>
 
-#### Replit (Optional, Recommended)
-1. Login/Create a [Replit](https://replit.com/) account and create a new Python repl.
-2. Setup .env within Replit's Secret tab (set `KEEP_ALIVE` to True) & go through [Installation](#installation). Optionally, move all files out of folder for ease of navigation, replace empty/old main.py.
-3. Run the program and copy URL in the Flask webview. It should be something similar to:
-`https://{Name of Repl}.{Repl username}.repl.co/` 
-4. Create an account on [Uptime Robot](https://uptimerobot.com/), Click 'Add New Monitor',HTTP monitor type, name the monitor anything you'd like, paste your copied link into URL, set interval to 5 minutes, timeout to 30 seconds, and create the monitor.
-5. Rerun the repl program. The repl should stay on 24/7! Your playlist will continue to be updated at no computer resource cost to you!
-
 #### Google Sheets/GSpread (Optional)
 1. Sign into [Google Cloud Console](https://console.cloud.google.com/), create your APP,Enable Google Sheets and Google Drive APIs.
 3. Head to API & Services -> Credentials ->  Create Credentials -> Service Account. Go through the prompts & download the JSON file afterwards.
@@ -67,7 +59,7 @@ This script can be used locally or using Docker.
 Clone the repository & Install dependencies
 ```bash
   git clone https://github.com/Prem-ium/Spotify-Wrapped-365.git
-  cd Spotify-Wrapped365
+  cd Spotify-Wrapped-365
   pip install -r requirements.txt
 ```
 Finally, you're ready to run the script!
