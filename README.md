@@ -3,7 +3,7 @@
 
 <p align="center">Generate your Spotify <i>Top Tracks</i> in a Playlist, <i>Top Played Artists, & More</i>!</p>
 
-![image](https://user-images.githubusercontent.com/80719066/202199720-a1203f3a-7d8b-441c-bc91-911490a073ab.png)
+![image](https://github.com/Prem-ium/Spotify-Wrapped-365/assets/80719066/c4f0aa03-90e8-4784-b0e0-0b5bf8d320f6)
 
 ## Features
 - Generate Top Tracks Playlist that auto-updates!
