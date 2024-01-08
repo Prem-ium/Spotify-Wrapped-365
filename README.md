@@ -87,11 +87,8 @@ Finally, you're ready to run the script!
 
 5. Let the bot log in and begin working. DO NOT PRESS `CTRL-c`. This will kill the container and the bot. To exit the logs view, press `CTRL-p` then `CTRL-q`. This will exit the logs view but let the bot keep running.
 
-
 ## License
-
 This repository is using the [MIT](https://choosealicense.com/licenses/mit/) license.
-
 
 ## 🎧 What I've been listening to
 
@@ -99,31 +96,15 @@ This repository is using the [MIT](https://choosealicense.com/licenses/mit/) lic
 
 ## Donations
 I've been working on this project for a few months now, and I'm really happy with how it's turned out. It's also been a helpful tool for users to earn some extra money with Bing Rewards. I'm currently working on adding new features to the script and working on other similar programs to generate passive income. I'm also working on making the script more user-friendly and accessible to a wider audience.
+If you appreciate my work and would like to show your support, there are two convenient ways to make a donation:
 
-I'm accepting donations through BuyMeCoffee or GitHub Sponsors. Any amount you can donate will be greatly appreciated.
+1. **GitHub Sponsors**
+   - [Donate via GitHub Sponsors](https://github.com/sponsors/Prem-ium)
+   - This is the preferred donation method as you can place donations with no transaction fees & possibily receive perks for your donation.
+   - [![GitHub Sponsor](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA)](https://github.com/sponsors/Prem-ium)
 
-<div style="display: grid; grid-template-columns: 1fr 1fr; justify-content: center; gap: 10px;">
-    <div style="display: grid; justify-content: center;">
-        <span>Buy Me a Coffee:</span>
-        <a href="https://www.buymeacoffee.com/prem.ium" target="_blank">
-            <img src="https://raw.githubusercontent.com/Prem-ium/youtube-analytics-bot/main/output-examples/media/coffee-logo.png" alt="Buy Me A Coffee" style="height: 41px !important; width: 174px !important; box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important; -webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;">
-        </a>
-    </div>
-    <div style="display: grid; justify-content: center;">
-        <span>GitHub Sponsors:</span>
-        <a href="https://github.com/sponsors/Prem-ium" target="_blank">
-            <img src="https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AAA" alt="GitHub Sponsor" style="height: 41px !important; width: 174px !important; box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important; -webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;">
-        </a>
-    </div>
-</div>
+2. **Buy Me A Coffee**
+   - [Donate via Buy Me A Coffee](https://www.buymeacoffee.com/prem.ium)
+   - [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/prem.ium)
 
-Your donations will help me to cover the costs of hosting the project, developing new features, and marketing the project to a wider audience.
-Thank you for your support!
-
-
-## Final Remarks
-How to Get Spotify Wrapped. 365 days a year. While everyone else google searches 'how to see / check / find spotify wrapped' you'll have access to your top played tracks and artists all year long! 
-
-As previously mentioned however, I strongly recommend utilizing this repository using a service such as [Replit](https://replit.com/) & [UpTimeRobot](https://uptimerobot.com/) as they will allow you the program to run without any computer resource cost to you. 
-
-Beyond that, thank you for your interest in this repository. Please leave a 🌟 & share with your friends!
+Your generous donations will go a long way in helping me cover the expenses associated with developing new features and promoting the project to a wider audience. I extend my heartfelt gratitude to all those who have already contributed. Thank you for your support!
