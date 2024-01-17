@@ -1,6 +1,9 @@
 <p align="right"><a href="https://developer.spotify.com/dashboard"><img src="https://img.shields.io/badge/Spotify-1ED760?style=for-the-badge&logo=spotify&logoColor=white"/></a></p>
 <h1 align="center"> 🎧 Spotify Wrapped 365 🎶 </h1>
-
+<p align="right"> 
+        <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54"/><a href="https://github.com/sponsors/Prem-ium" target="_blank">
+        <img src="https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AA" alt="Github Sponsor"/></a>
+</p>
 <p align="center">Generate your Spotify <i>Top Tracks</i> in a Playlist, <i>Top Played Artists, & More</i>!</p>
 
 ![image](https://github.com/Prem-ium/Spotify-Wrapped-365/assets/80719066/c4f0aa03-90e8-4784-b0e0-0b5bf8d320f6)
@@ -38,8 +41,6 @@ To run this project, you will need to add the following environment variables to
 | `TZ`                   | Your desired Time-Zone. Should be formatted from the IANA TZ Database.                                               | `America/New York`                 |
 | `AUTH_CACHE`         | Cache JSON String retrieved from initial setup, for GitHub Actions.      | -                                  |
 | `GSPREAD_KEYS`         | Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API.       | -                                  |
-
-
 
 ## Setup
 #### Spotify Developer Credentials (Required)
@@ -90,12 +91,8 @@ Finally, you're ready to run the script!
 ## License
 This repository is using the [MIT](https://choosealicense.com/licenses/mit/) license.
 
-## 🎧 What I've been listening to
-
-[<img src="covers/short_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/41FgHkzQ2wf4v8MtoITL77?si=c4c016d8bdbf411a)   [<img src="covers/medium_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/657cuGMmf1CnJEeMhfwgnK?si=154abf33ddd64a20)  [<img src="covers/long_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/42TRuidms91LuMajAIu5xI?si=8a22e2ccb6b9445f)
-
 ## Donations
-I've been working on this project for a few months now, and I'm really happy with how it's turned out. It's also been a helpful tool for users to earn some extra money with Bing Rewards. I'm currently working on adding new features to the script and working on other similar programs to generate passive income. I'm also working on making the script more user-friendly and accessible to a wider audience.
+I've been working on this project for a few months now, and I'm really happy with how it's turned out. It's also been a helpful tool for users to view their music data.
 If you appreciate my work and would like to show your support, there are two convenient ways to make a donation:
 
 1. **GitHub Sponsors**
@@ -108,3 +105,8 @@ If you appreciate my work and would like to show your support, there are two con
    - [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/prem.ium)
 
 Your generous donations will go a long way in helping me cover the expenses associated with developing new features and promoting the project to a wider audience. I extend my heartfelt gratitude to all those who have already contributed. Thank you for your support!
+
+## 🎧 What I've been listening to
+
+[<img src="covers/short_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/41FgHkzQ2wf4v8MtoITL77?si=c4c016d8bdbf411a)   [<img src="covers/medium_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/657cuGMmf1CnJEeMhfwgnK?si=154abf33ddd64a20)  [<img src="covers/long_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/42TRuidms91LuMajAIu5xI?si=8a22e2ccb6b9445f)
+
