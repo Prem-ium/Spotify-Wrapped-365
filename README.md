@@ -17,9 +17,6 @@
 - Google Sheets Compatiable. 
 - Keep_Alive Flask Server
 
-### Issues
-- GitHub Actions Support (Currently Not Working-> ISSUE: Spotipy Access token is able to be refreshed, but cannot be updated to GitHub Secrets for next run)
-
 ## Environment Variables
 To run this project, you will need to add the following environment variables to your .env file (see .env.example for a reference):
 ##### Required .env:
@@ -39,7 +36,6 @@ To run this project, you will need to add the following environment variables to
 | `KEEP_ALIVE`           | Whether to run the flask server or not to keep the program from sleeping on replit.                                  | False                              |
 | `APPRISE_ALERTS`       | Full list of services and their URLs available here: [Apprise Wiki](https://github.com/caronc/apprise/wiki)          | -                                  |
 | `TZ`                   | Your desired Time-Zone. Should be formatted from the IANA TZ Database.                                               | `America/New York`                 |
-| `AUTH_CACHE`         | Cache JSON String retrieved from initial setup, for GitHub Actions.      | -                                  |
 | `GSPREAD_KEYS`         | Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API.       | -                                  |
 
 ## Setup
@@ -90,6 +86,9 @@ Finally, you're ready to run the script!
 
 ## License
 This repository is using the [MIT](https://choosealicense.com/licenses/mit/) license.
+
+### Issues
+- GitHub Actions Support (Currently Not Working-> ISSUE: Spotipy Access token is able to be refreshed, but cannot be updated to GitHub Secrets for next run)
 
 ## Donations
 I've been working on this project for a few months now, and I'm really happy with how it's turned out. It's also been a helpful tool for users to view their music data.
