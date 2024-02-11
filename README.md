@@ -4,7 +4,7 @@
         <img src="https://img.shields.io/badge/python-3670A0?style=for-the-badge&logo=python&logoColor=ffdd54"/><a href="https://github.com/sponsors/Prem-ium" target="_blank">
         <img src="https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#EA4AA" alt="Github Sponsor"/></a>
 </p>
-<p align="center">Generate your Spotify <i>Top Tracks</i> in a Playlist, <i>Top Played Artists, & More</i>!</p>
+<p align="center">View your Spotify <i>Top Tracks</i> in a Playlist, <i>Top Played Artists, & More</i>!</p>
 
 ![image](https://github.com/Prem-ium/Spotify-Wrapped-365/assets/80719066/c4f0aa03-90e8-4784-b0e0-0b5bf8d320f6)
 
@@ -39,20 +39,24 @@ To run this project, you will need to add the following environment variables to
 | `GSPREAD_KEYS`         | Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API.       | -                                  |
 
 ## Setup
-#### Spotify Developer Credentials (Required)
-1. Head over to [Spotify Developer's Dashboard](https://developer.spotify.com/dashboard/). Login or create an account using your Spotify. 
-2. Create a new Application. Name it anything you want to, add any description, and agree to TOS.
-3. Click on 'Edit Settings' and add redirect URL you've set in your .env file & save. Examples:
-<img src="https://user-images.githubusercontent.com/80719066/202246758-b0472b8c-b03f-44fc-8e1a-c161c7746a93.png" style="width: 50%;"></img>
-4. Click 'Show Client Secret'
-5. Copy/paste Client ID into `CLIENT_ID` and Secret Client ID into `SECRET_CLIENT_ID` within your .env file.
-<img src="https://user-images.githubusercontent.com/80719066/202246004-f7307806-69ec-4489-975b-beb71e6637b3.png" style="width: 50%;"></img>
 
-#### Google Sheets/GSpread (Optional)
-1. Sign into [Google Cloud Console](https://console.cloud.google.com/), create your APP,Enable Google Sheets and Google Drive APIs.
-3. Head to API & Services -> Credentials ->  Create Credentials -> Service Account. Go through the prompts & download the JSON file afterwards.
-5. Open Google Sheets and create a new file named 'Wrapped365'. Add tabs named 'short_term', 'medium_term', 'long_term', 'short_term Artists', 'medium_term Artists', and 'long_term Artists'
-6. Share the Google Sheet Document with the email of your service account, give editor permissions. The email can be found back on Google's Cloud Console Credentials or within the JSON file you downloaded. It would look something like: wrapped-test@wrapped-test943892.iam.gserviceaccount.com
+### Spotify Developer Credentials (Required)
+1. Go to [Spotify Developer's Dashboard](https://developer.spotify.com/dashboard). Log in using your Spotify credentials.
+2. Create a new Application. Name it as desired, add any description, and agree to the Terms of Service.
+3. Click on 'Edit Settings' and add the redirect URL you've set in your `.env` file, then save. Examples:
+
+   ![Redirect URL Example](https://user-images.githubusercontent.com/80719066/202246758-b0472b8c-b03f-44fc-8e1a-c161c7746a93.png)
+
+4. Click 'Show Client Secret'.
+5. Copy/paste the Client ID into `CLIENT_ID` and the Secret Client ID into `SECRET_CLIENT_ID` within your `.env` file.
+
+   ![Client ID Example](https://user-images.githubusercontent.com/80719066/202246004-f7307806-69ec-4489-975b-beb71e6637b3.png)
+
+### Google Sheets/GSpread (Optional)
+1. Sign into the [Google Cloud Console](https://console.cloud.google.com), create your APP, and enable Google Sheets and Google Drive APIs.
+2. Go to API & Services -> Credentials -> Create Credentials -> Service Account. Follow the prompts and download the JSON file afterward.
+3. Open Google Sheets and create a new file named 'Wrapped365'. Add tabs named 'short_term', 'medium_term', 'long_term', 'short_term Artists', 'medium_term Artists', and 'long_term Artists'.
+4. Share the Google Sheet Document with the email of your service account, giving editor permissions. The email can be found in Google's Cloud Console Credentials or within the downloaded JSON file, resembling something like: `wrapped-test@wrapped-test943892.iam.gserviceaccount.com`.
 
 ## Installation
 This script can be used locally or using Docker.
