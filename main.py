@@ -33,6 +33,7 @@ import pandas                           as pd
 
 from spotipy.oauth2                     import SpotifyOAuth
 from oauth2client.service_account       import ServiceAccountCredentials
+from time                               import sleep
 from pytz                               import timezone
 from dotenv                             import load_dotenv
 
@@ -262,20 +263,19 @@ def Wrapped():
 
     if APPRISE_ALERTS:
         alerts.notify(title=f'Spotify Wrapped 365 Finished!',
-                      body='Top Artists and Tracks Updated!')
+                      body=f'Top Artists and Tracks Updated! {datetime.datetime.now(TZ).strftime("%I:%M%p %m/%d")}')
 
 def main():
-    info = f'Finished updating all playlists!\nSleeping for {WAIT/3600} hours.\n\nNext update will be at {datetime.datetime.now(TZ) + datetime.timedelta(seconds=WAIT)}'
     while True:
         try:
             Wrapped()
-            print(f'\n{"-"*88}\n{f"{info}".center(88)}\n{"-"*88}\n')
-            time.sleep(WAIT)
+            print(f'{"-"*88}\nFinished at: {datetime.datetime.now(TZ):%H:%M (%m-%d)}. Sleeping for {WAIT/3600:.1f} hours. Next run: {datetime.datetime.now(TZ) + datetime.timedelta(seconds=WAIT):%H:%M (%m-%d)}\n{"-"*88}')
+            sleep(WAIT)
         except Exception as e:
             print(f'\n{traceback.format_exc()}\n')
             if APPRISE_ALERTS:
                 alerts.notify(title=f'Spotify Wrapped 365 Error', body=f'{e}\nAttempting to restart in 10 minutes...')
-            time.sleep(600)
+            sleep(600)
             continue
 
 if __name__ == '__main__':
