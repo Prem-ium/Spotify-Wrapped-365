@@ -36,6 +36,7 @@ To run this project, you will need to add the following environment variables to
 | `KEEP_ALIVE`           | Whether to run the flask server or not to keep the program from sleeping on replit.                                  | False                              |
 | `APPRISE_ALERTS`       | Full list of services and their URLs available here: [Apprise Wiki](https://github.com/caronc/apprise/wiki)          | -                                  |
 | `TZ`                   | Your desired Time-Zone. Should be formatted from the IANA TZ Database.                                               | `America/New York`                 |
+| `AUTH_CACHE`                   | Cache JSON String retrieved from initial setup, for hosting 24/7 on Render or other platforms for free.                                              | -               |
 | `GSPREAD_KEYS`         | Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API.       | -                                  |
 
 ## Setup

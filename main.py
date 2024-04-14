@@ -56,19 +56,13 @@ else:
     SP = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
                                                    redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
     USER_ID = SP.current_user()['id']
-    
-    # Not in use, originally made for Actions
-    # ISSUE: Access token is able to be refreshed, but cannot be updated to GitHub Secrets for next run 
-
-    # GITHUB_ACTIONS = True if os.environ.get("GITHUB_ACTIONS", "false").lower() == "true" else False
-    # if os.environ.get('AUTH_CACHE', None) is not None:
-    #     token_info = json.loads(os.environ['AUTH_CACHE'])
-    #     token_info = sp_oauth.refresh_access_token(token_info['refresh_token'])
-    #     SP = spotipy.Spotify(auth=token_info['access_token'])
-    # else:
-    #      token_info = sp_oauth.get_access_token()
-    #      print(f'Assign the following to the AUTH_CACHE secrets variable, within GitHub Actions Secrets page:\n{token_info}\n\n')
-    #      SP = spotipy.Spotify(auth=token_info['access_token'])
+    if os.environ.get('AUTH_CACHE', None) is not None:
+         token_info = json.loads(os.environ['AUTH_CACHE'])
+         token_info = SP.refresh_access_token(token_info['refresh_token'])
+         SP = spotipy.Spotify(auth=token_info['access_token'])
+    else:
+        SP = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
+                                                   redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
 
 # Whether to use keep_alive.py
 if (os.environ.get("KEEP_ALIVE", "false").lower() == "true"):
