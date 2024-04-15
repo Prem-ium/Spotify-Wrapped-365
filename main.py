@@ -52,18 +52,16 @@ else:
     SCOPE = "user-top-read playlist-modify-private playlist-modify-public user-library-modify user-library-read playlist-read-private ugc-image-upload"
     USERNAME = os.environ['USERNAME']
 
+    auth = SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
+                                                   redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False)
     # Initialize Spotify
-    SP = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
-                                                   redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
-    USER_ID = SP.current_user()['id']
     if os.environ.get('AUTH_CACHE', None) is not None:
-         token_info = json.loads(os.environ['AUTH_CACHE'])
-         token_info = SP.refresh_access_token(token_info['refresh_token'])
-         SP = spotipy.Spotify(auth=token_info['access_token'])
+        print('tf')
+        token_info = json.loads(os.environ['AUTH_CACHE'])
+        SP = spotipy.Spotify(auth=token_info['access_token'])
     else:
-        SP = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=SPOTIPY_CLIENT, client_secret=SPOTIPY_SECRET_CLIENT,
-                                                   redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False))
-
+        SP = spotipy.Spotify(auth_manager=auth)
+    USER_ID = SP.current_user()['id']
 # Whether to use keep_alive.py
 if (os.environ.get("KEEP_ALIVE", "false").lower() == "true"):
     from keep_alive                     import keep_alive
@@ -99,6 +97,10 @@ def apprise_init():
         for service in APPRISE_ALERTS:
             alerts.add(service)
         return alerts
+
+def refresh_token():
+    token = SpotifyOAuth.refresh_access_token(self=auth, refresh_token=token_info['refresh_token'])
+    os.environ['AUTH_CACHE'] = json.dumps(token)
 
 # Returns top artists within a time period
 def get_top_artists(time_period):
@@ -262,6 +264,7 @@ def Wrapped():
 def main():
     while True:
         try:
+            refresh_token()
             Wrapped()
             print(f'{"-"*88}\nFinished at: {datetime.datetime.now(TZ):%H:%M (%m-%d)}. Sleeping for {WAIT/3600:.1f} hours. Next run: {datetime.datetime.now(TZ) + datetime.timedelta(seconds=WAIT):%H:%M (%m-%d)}\n{"-"*88}')
             sleep(WAIT)
