@@ -56,7 +56,6 @@ else:
                                                    redirect_uri=SPOTIPY_REDIRECT, scope=SCOPE, username=USERNAME, open_browser=False)
     # Initialize Spotify
     if os.environ.get('AUTH_CACHE', None) is not None:
-        print('tf')
         token_info = json.loads(os.environ['AUTH_CACHE'])
         SP = spotipy.Spotify(auth=token_info['access_token'])
     else:
@@ -99,7 +98,7 @@ def apprise_init():
         return alerts
 
 def refresh_token():
-    token = SpotifyOAuth.refresh_access_token(self=auth, refresh_token=token_info['refresh_token'])
+    token = SpotifyOAuth.refresh_access_token(self=auth, refresh_token=json.loads(os.environ['AUTH_CACHE']))
     os.environ['AUTH_CACHE'] = json.dumps(token)
 
 # Returns top artists within a time period
