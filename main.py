@@ -264,7 +264,8 @@ def Wrapped():
 def main():
     while True:
         try:
-            refresh_token()
+            if os.environ.get('AUTH_CACHE', None) is not None:
+                refresh_token()
             Wrapped()
             print(f'{"-"*88}\nFinished at: {datetime.datetime.now(TZ):%H:%M (%m-%d)}. Sleeping for {WAIT/3600:.1f} hours. Next run: {datetime.datetime.now(TZ) + datetime.timedelta(seconds=WAIT):%H:%M (%m-%d)}\n{"-"*88}')
             sleep(WAIT)
