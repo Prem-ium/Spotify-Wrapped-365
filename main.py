@@ -98,7 +98,8 @@ def apprise_init():
         return alerts
 
 def refresh_token():
-    token = SpotifyOAuth.refresh_access_token(self=auth, refresh_token=json.loads(os.environ['AUTH_CACHE']))
+    refresh_token = json.loads(os.environ['AUTH_CACHE'])['refresh_token']
+    token = SpotifyOAuth.refresh_access_token(self=auth, refresh_token=refresh_token)
     os.environ['AUTH_CACHE'] = json.dumps(token)
 
 # Returns top artists within a time period
