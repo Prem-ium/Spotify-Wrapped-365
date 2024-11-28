@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/b47fb581-c444-4dd7-9001-d50d8404688a?raw=true" alt="Wired Coupon Automation Tool Banner"/>
+  <img src="https://github.com/user-attachments/assets/695ee24e-eb95-493c-8e2e-920aef65eec5?raw=true" alt="Wired Coupon Automation Tool Banner"/>
 </p>
 
 ---
