@@ -109,8 +109,9 @@ Finally, you're ready to run the script!
 This repository is using the [MIT](https://choosealicense.com/licenses/mit/) license.
 
 ---
-### Issues
-- GitHub Actions Support (Currently Not Working-> ISSUE: Spotipy Access token is able to be refreshed, but cannot be updated to GitHub Secrets for next run)
+## Experiencing Issues? 🛠️
+I'm not available to respond to issues in this repository. For direct support, please consider sponsoring me below under the `Silver` or `Gold` tier. Keep in mind that the public version is mostly "as built" and is rarely updated, while the private Gold Sponsor version receives regular updates and support.
+[![Sponsor](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#white)](https://github.com/sponsors/Prem-ium)
 
 ---
 ## Donations
