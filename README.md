@@ -24,7 +24,7 @@
 ## Features
 - Generate Top Tracks Playlist that auto-updates!
 - Generate List of Top Played Artists
-- Generate Reccomended Tracks Playlists (Optional)
+- ~~Generate Reccomended Tracks Playlists~~ (API Endpoint Depreciated)
 - Optional Apprise Alerts/Notifications
 - Docker Support
 - Google Sheets Compatiable. 
@@ -46,7 +46,6 @@ To run this project, you will need to add the following environment variables to
 |------------------------|------------------------------------------------------------------------------------------------------------------------|------------------------------------|
 | `MINUTES`              | Number of minutes the program should wait before updating Top Tracks playlist.                                       | 360 minutes (or 6 hours)           |
 | `PUBLIC_PLAYLIST`      | Boolean value indicating whether to create a public playlist.                                                         | True                               |
-| `RECOMMENDATIONS`      | Boolean value indicating whether to generate recommendations (tracks playlist and artists recommendations).          | False                              |
 | `KEEP_ALIVE`           | Whether to run the flask server or not to keep the program from sleeping on replit.                                  | False                              |
 | `APPRISE_ALERTS`       | Full list of services and their URLs available here: [Apprise Wiki](https://github.com/caronc/apprise/wiki)          | -                                  |
 | `TZ`                   | Your desired Time-Zone. Should be formatted from the IANA TZ Database.                                               | `America/New York`                 |

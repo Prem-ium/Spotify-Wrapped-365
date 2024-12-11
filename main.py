@@ -68,7 +68,7 @@ if (os.environ.get("KEEP_ALIVE", "false").lower() == "true"):
 
 # Retrieve .env
 PLAYLIST_TYPE = True if os.environ.get("PUBLIC_PLAYLIST", "true").lower() == "true" else False
-RECCOMENDATIONS = True if os.environ.get("RECCOMENDATIONS", "False").lower() == "true" else False
+# RECCOMENDATIONS = True if os.environ.get("RECCOMENDATIONS", "False").lower() == "true" else False
 
 TZ = timezone(os.environ.get("TZ", "America/New_York"))
 WAIT = float(os.environ.get('MINUTES', 360)) * 60.0
@@ -178,31 +178,32 @@ def update_playlist(playlists, playlistTitle, playlistDescription, track_ids, im
     return playlist_id
 
 # Generates/Updates Recommended Playlist based on top 5 tracks & artists
-def generate_recommended(time_period, playlist_id, playlists):
-    print('Generating Recommended Playlist (This may take a while)...')
-    seed_tracks, seed_artists = [], []
-    top_artists = SP.current_user_top_artists(limit=6, offset=0, time_range=time_period)
-    seed_tracks = [track['track']['uri'] for track in SP.playlist_tracks(playlist_id, limit=5)['items']]
-    seed_artists = [artist['uri'] for artist in top_artists['items'][:5]]
-
-    recommendations = SP.recommendations(seed_tracks=seed_tracks, limit=25)
-    recommended_track_uris = [track['uri'] for track in recommendations['tracks']]
-
-    title = f'{time_period} Recommended: Wrapped 365'
-    description = f'Recommended playlist curated based on my top tracks. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. Last Updated {datetime.datetime.now(TZ).strftime("%I:%M%p %m/%d")} https://github.com/Prem-ium/Spotify-Wrapped-365'
-    playlist_id = update_playlist(playlists, title, description, recommended_track_uris, imagePath = f'recommend_{time_period}')
-
-   # Display Top 5 Recommended Artists based on Time Period
-    artist_recommendations = SP.recommendations(seed_artists=seed_artists, limit=5)
-    artist = f"Top Recommended Artists for {time_period}\n"
-    print(artist)
-    for i in range(0, 5):
-        try:
-            print(f"{i + 1}: {artist_recommendations['tracks'][i]['artists'][0]['name']}")
-            artist += f"{i + 1}: {artist_recommendations['tracks'][i]['artists'][0]['name']}\n"
-        except:     pass
-    if APPRISE_ALERTS:
-        alerts.notify(title=f'Top Recommended Artists for {time_period}', body=artist)
+# Depreciated Endpoint
+# def generate_recommended(time_period, playlist_id, playlists):
+#     print('Generating Recommended Playlist (This may take a while)...')
+#     seed_tracks, seed_artists = [], []
+#     top_artists = SP.current_user_top_artists(limit=6, offset=0, time_range=time_period)
+#     seed_tracks = [track['track']['uri'] for track in SP.playlist_tracks(playlist_id, limit=5)['items']]
+#     seed_artists = [artist['uri'] for artist in top_artists['items'][:5]]
+# 
+#     recommendations = SP.recommendations(seed_tracks=seed_tracks, limit=25)
+#     recommended_track_uris = [track['uri'] for track in recommendations['tracks']]
+# 
+#     title = f'{time_period} Recommended: Wrapped 365'
+#     description = f'Recommended playlist curated based on my top tracks. Generated using Prem-ium\'s Wrapped365 Python Project. Updated every {WAIT/3600} hours. Last Updated {datetime.datetime.now(TZ).strftime("%I:%M%p %m/%d")} https://github.com/Prem-ium/Spotify-Wrapped-365'
+#     playlist_id = update_playlist(playlists, title, description, recommended_track_uris, imagePath = f'recommend_{time_period}')
+# 
+#    # Display Top 5 Recommended Artists based on Time Period
+#     artist_recommendations = SP.recommendations(seed_artists=seed_artists, limit=5)
+#     artist = f"Top Recommended Artists for {time_period}\n"
+#     print(artist)
+#     for i in range(0, 5):
+#         try:
+#             print(f"{i + 1}: {artist_recommendations['tracks'][i]['artists'][0]['name']}")
+#             artist += f"{i + 1}: {artist_recommendations['tracks'][i]['artists'][0]['name']}\n"
+#         except:     pass
+#     if APPRISE_ALERTS:
+#         alerts.notify(title=f'Top Recommended Artists for {time_period}', body=artist)
 
 def Wrapped():
     if APPRISE_ALERTS:
@@ -251,10 +252,6 @@ def Wrapped():
             if APPRISE_ALERTS:
                 alerts.notify(title=f'Top Artists for {time_period}', body=most_played_artists)
 
-        if RECCOMENDATIONS:
-            print("."*80)
-            try:    generate_recommended(time_range, playlist_id, playlists=userPlaylists)
-            except: print(traceback.format_exc())
         print(f'\n{"-"*88}\n{f"Finished {time_range}".upper().center(88)}\n{"-"*88}\n\n')
 
     if APPRISE_ALERTS:
