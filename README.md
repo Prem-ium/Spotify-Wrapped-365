@@ -17,7 +17,7 @@
 </p>
 
 <p align="center">
-  <img src="https://github.com/user-attachments/assets/695ee24e-eb95-493c-8e2e-920aef65eec5?raw=true" alt="Wired Coupon Automation Tool Banner"/>
+  <img src="https://github.com/user-attachments/assets/695ee24e-eb95-493c-8e2e-920aef65eec5?raw=true" alt="Spotify Wrapped 365 Banner"/>
 </p>
 
 ---
@@ -34,45 +34,50 @@
 ## Environment Variables
 To run this project, you will need to add the following environment variables to your .env file (see .env.example for a reference):
 ##### Required .env:
-| Environment Variable   | Description                                                                                                            | Default Value |
-|------------------------|------------------------------------------------------------------------------------------------------------------------|---------------|
-| `CLIENT_ID`            | Found on Spotify Developer Dashboard. [More Info](https://developer.spotify.com/dashboard/)                           | -             |
-| `SECRET_CLIENT_ID`     | Found on Spotify Developer Dashboard. [More Info](https://developer.spotify.com/dashboard/)                           | -             |
-| `REDIRECT_URL`         | The Redirect URL you added when creating the App on Spotify's Developer Dashboard. Check .env.example for reference. | -             |
-| `USERNAME`             | Your Spotify account username (can be found in Spotify account settings.)                                             | -             |
+### Required .env
 
-##### Optional .env:
-| Environment Variable   | Description                                                                                                            | Default Value                      |
-|------------------------|------------------------------------------------------------------------------------------------------------------------|------------------------------------|
-| `MINUTES`              | Number of minutes the program should wait before updating Top Tracks playlist.                                       | 360 minutes (or 6 hours)           |
-| `PUBLIC_PLAYLIST`      | Boolean value indicating whether to create a public playlist.                                                         | True                               |
-| `KEEP_ALIVE`           | Whether to run the flask server or not to keep the program from sleeping on replit.                                  | False                              |
-| `APPRISE_ALERTS`       | Full list of services and their URLs available here: [Apprise Wiki](https://github.com/caronc/apprise/wiki)          | -                                  |
-| `TZ`                   | Your desired Time-Zone. Should be formatted from the IANA TZ Database.                                               | `America/New York`                 |
-| `AUTH_CACHE`                   | Cache JSON String retrieved from initial setup, for hosting 24/7 on Render or other platforms for free.                                              | -               |
-| `GSPREAD_KEYS`         | Your Google Service Account JSON contents obtained via OAuth 2.0 Client ID in Credentials of Google Cloud API.       | -                                  |
+| Environment Variable   | Description                                                                                                            |
+|------------------------|------------------------------------------------------------------------------------------------------------------------|
+| `CLIENT_ID`            | Found on [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/).                                      |
+| `SECRET_CLIENT_ID`     | Found on [Spotify Developer Dashboard](https://developer.spotify.com/dashboard/).                                      |
+| `REDIRECT_URL`         | The Redirect URL you added when creating the App on Spotify's Developer Dashboard. Check `.env.example` for reference. |
+| `USERNAME`             | Your Spotify account username (can be found in Spotify account settings).                                             |
+
+### Optional Environment Variables:
+| Environment Variable   | Description                                                                                                            | Default Value                        |
+|------------------------|------------------------------------------------------------------------------------------------------------------------|--------------------------------------|
+| `MINUTES`              | The number of minutes to wait before updating the Top Tracks playlist.                                                   | `360` (or 6 hours)                  |
+| `PUBLIC_PLAYLIST`      | Determines whether to create a public playlist. Accepts boolean values (`True`/`False`).                                 | `True`                               |
+| `KEEP_ALIVE`           | Whether to keep the Flask server running to prevent the program from sleeping on Replit. Accepts boolean values (`True`/`False`). | `False`                              |
+| `APPRISE_ALERTS`       | List of services and URLs for notifications. For more information, visit the [Apprise Wiki](https://github.com/caronc/apprise/wiki). | Not set                              |
+| `TZ`                   | The desired time zone, formatted according to the IANA Time Zone Database.                                              | `America/New_York`                   |
+| `AUTH_CACHE`           | A cached JSON string retrieved during initial setup, useful for hosting 24/7 on platforms like Render or other free hosting providers. | Not set                              |
+| `GSPREAD_KEYS`         | Google Service Account JSON obtained via OAuth 2.0 Client ID from the Google Cloud API Credentials.                    | Not set                              |
+
 
 ---
 ## Setup
 
 ### Spotify Developer Credentials (Required)
-1. Go to [Spotify Developer's Dashboard](https://developer.spotify.com/dashboard). Log in using your Spotify credentials.
-2. Create a new Application. Name it as desired, add any description, and agree to the Terms of Service.
-3. Click on 'Edit Settings' and add the redirect URL you've set in your `.env` file, then save. Examples:
-
+1. Visit the [Spotify Developer Dashboard](https://developer.spotify.com/dashboard) and log in with your Spotify credentials.
+2. Create a new application. Choose a name, provide a description (optional), and accept the Terms of Service.
+3. In the 'Edit Settings' section, add the redirect URL from your `.env` file, then save. Example:
+   
    ![Redirect URL Example](https://user-images.githubusercontent.com/80719066/202246758-b0472b8c-b03f-44fc-8e1a-c161c7746a93.png)
 
 4. Click 'Show Client Secret'.
-5. Copy/paste the Client ID into `CLIENT_ID` and the Secret Client ID into `SECRET_CLIENT_ID` within your `.env` file.
+5. Copy the Client ID and paste it into the `CLIENT_ID` field in your `.env` file. Similarly, copy the Client Secret and paste it into the `SECRET_CLIENT_ID` field.
 
    ![Client ID Example](https://user-images.githubusercontent.com/80719066/202246004-f7307806-69ec-4489-975b-beb71e6637b3.png)
 
-### Google Sheets/GSpread (Optional)
-1. Sign into the [Google Cloud Console](https://console.cloud.google.com), create your APP, and enable Google Sheets and Google Drive APIs.
-2. Go to API & Services -> Credentials -> Create Credentials -> Service Account. Follow the prompts and download the JSON file afterward.
-3. Open Google Sheets and create a new file named 'Wrapped365'. Add tabs named 'short_term', 'medium_term', 'long_term', 'short_term Artists', 'medium_term Artists', and 'long_term Artists'.
-4. Share the Google Sheet Document with the email of your service account, giving editor permissions. The email can be found in Google's Cloud Console Credentials or within the downloaded JSON file, resembling something like: `wrapped-test@wrapped-test943892.iam.gserviceaccount.com`.
 
+### Google Sheets/GSpread (Optional)
+1. Log in to the [Google Cloud Console](https://console.cloud.google.com), create a new project, and enable the Google Sheets and Google Drive APIs.
+2. Navigate to **API & Services > Credentials**, then click **Create Credentials > Service Account**. Follow the prompts and download the resulting JSON file.
+3. In Google Sheets, create a new file named 'Wrapped365'. Add the following tabs: `short_term`, `medium_term`, `long_term`, `short_term Artists`, `medium_term Artists`, `long_term Artists`.
+4. Share the Google Sheet with the service account’s email (found in the downloaded JSON file or under the Google Cloud Console **Credentials** section). Grant it **Editor** permissions. The email will look like: `wrapped-test@wrapped-test943892.iam.gserviceaccount.com`.
+
+---
 ## Installation
 This script can be used locally or using Docker.
 ### Python
