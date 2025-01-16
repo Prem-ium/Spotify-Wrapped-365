@@ -135,5 +135,5 @@ Your generous donations will go a long way in helping me cover the expenses asso
 ---
 ## 🎧 What I've been listening to
 
-[<img src="covers/short_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/41FgHkzQ2wf4v8MtoITL77?si=c4c016d8bdbf411a)   [<img src="covers/medium_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/657cuGMmf1CnJEeMhfwgnK?si=154abf33ddd64a20)  [<img src="covers/long_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/42TRuidms91LuMajAIu5xI?si=8a22e2ccb6b9445f)
+[<img src="covers/short_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/5RN8v4pe3Ngfym6bK0FkJs?si=0404c9e27b42497c)   [<img src="covers/medium_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/2K42pHt3WF1gPDmdWUQOSu?si=2a1d8fc85cda4eff)  [<img src="covers/long_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/17IPVl8ynJLm3wTMEuBr8b?si=7bb9c270eec94938)
 
