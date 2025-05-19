@@ -33,7 +33,6 @@
 ---
 ## Environment Variables
 To run this project, you will need to add the following environment variables to your .env file (see .env.example for a reference):
-##### Required .env:
 ### Required .env
 
 | Environment Variable   | Description                                                                                                            |
@@ -109,15 +108,6 @@ Finally, you're ready to run the script!
 5. Let the bot log in and begin working. DO NOT PRESS `CTRL-c`. This will kill the container and the bot. To exit the logs view, press `CTRL-p` then `CTRL-q`. This will exit the logs view but let the bot keep running.
 
 ---
-## License
-This repository is using the [MIT](https://choosealicense.com/licenses/mit/) license.
-
----
-## Experiencing Issues? 🛠️
-I'm not available to respond to issues in this repository. For direct support, please consider sponsoring me below under the `Silver` or `Gold` tier. Keep in mind that the public version is mostly "as built" and is rarely updated, while the private Gold Sponsor version receives regular updates and support.
-[![Sponsor](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#white)](https://github.com/sponsors/Prem-ium)
-
----
 ## Donations
 I've been working on this project for a few months now, and I'm really happy with how it's turned out. It's also been a helpful tool for users to view their music data.
 If you appreciate my work and would like to show your support, there are two convenient ways to make a donation:
@@ -132,13 +122,24 @@ If you appreciate my work and would like to show your support, there are two con
    - [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20a%20Coffee-ffdd00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://www.buymeacoffee.com/prem.ium)
 
 3. **Referral Links**  
-   - If you're unable to make a monetary donation, you can still support my work by using my curated [Referral Links](https://github.com/Prem-ium/Referral-Link-Me/blob/main/README.md). Earn bonuses and rewards while contributing to my projects at the same time.
+   - Can’t donate directly? You can still support the project by using my curated [Referral Links](https://github.com/Prem-ium/Referral-Link-Me/blob/main/README.md) to earn bonuses and rewards while helping me out.
    - [Explore Referral Links](https://github.com/Prem-ium/Referral-Link-Me/blob/main/README.md)  
 
 Your generous donations will go a long way in helping me cover the expenses associated with developing new features and promoting the project to a wider audience. I extend my heartfelt gratitude to all those who have already contributed. Thank you for your support!
 
 ---
+## License
+This repository is using the [MIT](https://choosealicense.com/licenses/mit/) license.
+
+---
+## Experiencing Issues? 🛠️
+I'm not available to respond to issues in this repository. For direct support, please consider sponsoring me below under the `Silver` or `Gold` tier. Keep in mind that the public version is mostly "as built" and is rarely updated, while the private Gold Sponsor version receives regular updates and support.
+[![Sponsor](https://img.shields.io/badge/sponsor-30363D?style=for-the-badge&logo=GitHub-Sponsors&logoColor=#white)](https://github.com/sponsors/Prem-ium)
+
+
+<!--
 ## 🎧 What I've been listening to
 
 [<img src="covers/short_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/5RN8v4pe3Ngfym6bK0FkJs?si=0404c9e27b42497c)   [<img src="covers/medium_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/2K42pHt3WF1gPDmdWUQOSu?si=2a1d8fc85cda4eff)  [<img src="covers/long_term.jpg" style="width:30%;height:30%;">](https://open.spotify.com/playlist/17IPVl8ynJLm3wTMEuBr8b?si=7bb9c270eec94938)
+-->
 
