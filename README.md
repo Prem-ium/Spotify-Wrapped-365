@@ -21,6 +21,19 @@
 </p>
 
 ---
+## ⚠️ Disclaimer
+
+As of February 2026, Spotify introduced new restrictions to Development Mode access for the Spotify Web API. These changes require developers to use a Spotify Premium account and limit Development Mode applications to a small number of authorized users. Existing integrations were also affected beginning March 2026.  
+
+Because of these platform changes, some functionality in this project may no longer work for free Spotify accounts or newly created developer applications. This project is now primarily intended for personal/hobbyist use with a Spotify Premium account.  
+
+I do not currently plan to subscribe to Spotifiy's paid tier, so support might be limited. However, users who meet Spotify’s updated Development Mode requirements should still be able to run the project successfully.  
+
+For more details, see Spotify’s official announcement:  
+https://developer.spotify.com/blog/2026-02-06-update-on-developer-access-and-platform-security
+
+
+---
 ## Features
 - Generate Top Tracks Playlist that auto-updates!
 - Generate List of Top Played Artists
